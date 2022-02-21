@@ -103,9 +103,6 @@ export function initServer() {
     },
 
     routes() {
-      this.passthrough(
-        "/_next/static/development/_devPagesManifest.json"
-      )
       this.namespace = "api"
       // this.timing = 750
 
@@ -113,6 +110,9 @@ export function initServer() {
       this.get("/recipes/:id")
 
       this.get("/users/:id")
+
+      this.namespace = ""
+      this.passthrough()
     },
   })
 

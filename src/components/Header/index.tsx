@@ -1,6 +1,6 @@
-import Link from "next/link"
 import { FaGoogle } from "react-icons/fa"
 import { AiOutlineMenu } from "react-icons/ai"
+import { ActiveLink } from "./ActiveLink"
 import {
   Container,
   DrawerButton,
@@ -18,15 +18,15 @@ export function Header() {
       <h1>RECP</h1>
 
       <NavContainer>
-        <Link href="/">
-          <a className="active">Home</a>
-        </Link>
-        <Link href="#">
+        <ActiveLink activeClassName="active" href="/">
+          <a>Home</a>
+        </ActiveLink>
+        <ActiveLink activeClassName="active" href="/recipes">
           <a>Recipes</a>
-        </Link>
-        <Link href="#">
+        </ActiveLink>
+        <ActiveLink activeClassName="active" href="/countries">
           <a>Countries</a>
-        </Link>
+        </ActiveLink>
       </NavContainer>
 
       <SignInButton>
