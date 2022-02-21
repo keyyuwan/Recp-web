@@ -5,6 +5,7 @@ export const GlobalStyle = createGlobalStyle`
         --white: #fff;
 
         --gray-50: #f0f2f5;
+        --gray-500: #808080;
 
         --red: #b00020;
     }

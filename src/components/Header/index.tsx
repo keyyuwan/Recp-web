@@ -1,10 +1,20 @@
 import Link from "next/link"
 import { FaGoogle } from "react-icons/fa"
-import { Container, NavContainer, SignInButton } from "./styles"
+import { AiOutlineMenu } from "react-icons/ai"
+import {
+  Container,
+  DrawerButton,
+  NavContainer,
+  SignInButton,
+} from "./styles"
 
 export function Header() {
   return (
     <Container>
+      <DrawerButton>
+        <AiOutlineMenu size={24} />
+      </DrawerButton>
+
       <h1>RECP</h1>
 
       <NavContainer>
