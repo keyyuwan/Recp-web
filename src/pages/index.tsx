@@ -1,7 +1,12 @@
+import Head from "next/head"
+
 export default function Home() {
   return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <>
+      <Head>
+        <title>Recp</title>
+      </Head>
+      <h1>Landing Page</h1>
+    </>
   )
 }

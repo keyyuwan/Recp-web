@@ -56,7 +56,10 @@ export function initServer() {
           return faker.image.food()
         },
         ingredients() {
-          const ingredients = faker.helpers.uniqueArray(faker.word.noun, 5)
+          const ingredients = faker.helpers.uniqueArray(
+            faker.word.noun,
+            5
+          )
 
           return ingredients
         },
@@ -100,6 +103,9 @@ export function initServer() {
     },
 
     routes() {
+      this.passthrough(
+        "/_next/static/development/_devPagesManifest.json"
+      )
       this.namespace = "api"
       // this.timing = 750
 
