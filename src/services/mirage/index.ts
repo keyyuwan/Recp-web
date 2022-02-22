@@ -8,6 +8,7 @@ import {
 } from "miragejs"
 import { faker } from "@faker-js/faker"
 import { capitalize } from "../../utils/capitalize"
+import { countries } from "../../utils/countries"
 
 export function initServer() {
   const server = createServer({
@@ -44,7 +45,7 @@ export function initServer() {
           return faker.internet.email().toLocaleLowerCase()
         },
         avatar() {
-          return faker.image.people()
+          return faker.internet.avatar()
         },
       }),
 
@@ -53,7 +54,9 @@ export function initServer() {
           return capitalize(faker.lorem.word())
         },
         image() {
-          return faker.image.food()
+          return `${faker.image.image()}?random=${Math.round(
+            Math.random() * 1000
+          )}`
         },
         ingredients() {
           const ingredients = faker.helpers.uniqueArray(
@@ -72,13 +75,7 @@ export function initServer() {
           return preparationSteps
         },
         country() {
-          const country = faker.random.arrayElement([
-            "Brazil",
-            "Argentina",
-            "South Africa",
-            "Japan",
-            "Australia",
-          ])
+          const country = faker.random.arrayElement(countries)
 
           return country
         },
