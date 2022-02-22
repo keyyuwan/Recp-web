@@ -22,11 +22,15 @@ export const Container = styled.header<ContainerProps>`
   ${({ isBackgroundRed }) =>
     isBackgroundRed &&
     `
-     background: var(--red);
+     background: var(--red-500);
      opacity: 0.9;
      color: var(--gray-50);
      border-radius: 0 0 5px 5px;
   `}
+
+  h1 {
+    font-size: 2rem;
+  }
 `
 
 export const DrawerButton = styled.div`

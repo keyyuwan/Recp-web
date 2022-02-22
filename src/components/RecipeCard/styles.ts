@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const Container = styled.div`
   width: 280px;
   border-radius: 5px;
-  background: var(--red);
+  background: var(--red-500);
   color: var(--gray-50);
 
   transition: transform 0.5s;

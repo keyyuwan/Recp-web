@@ -14,7 +14,7 @@ export const NavContainer = styled.nav<NavContainerProps>`
   a.active {
     border-bottom: 1.5px solid
       ${({ isBackgroundRed }) =>
-        isBackgroundRed ? "var(--gray-50)" : "var(--red)"};
+        isBackgroundRed ? "var(--gray-50)" : "var(--red-500)"};
   }
 
   @media (max-width: 767px) {

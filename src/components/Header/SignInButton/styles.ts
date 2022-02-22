@@ -12,9 +12,9 @@ export const Container = styled.button<ContainerProps>`
   justify-content: center;
 
   background: ${({ isBackgroundRed }) =>
-    isBackgroundRed ? "var(--gray-50)" : "var(--red)"};
+    isBackgroundRed ? "var(--gray-50)" : "var(--red-500)"};
   color: ${({ isBackgroundRed }) =>
-    isBackgroundRed ? "var(--red)" : "var(--gray-50)"};
+    isBackgroundRed ? "var(--red-500)" : "var(--gray-50)"};
 
   height: 3rem;
   border-radius: 3rem;

@@ -7,7 +7,8 @@ export const GlobalStyle = createGlobalStyle`
         --gray-50: #f0f2f5;
         --gray-500: #808080;
 
-        --red: #b00020;
+        --red-400: rgb(220, 20, 60, 0.9);
+        --red-500: #b00020;
     }
 
     * {
@@ -41,7 +42,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     h2 {
