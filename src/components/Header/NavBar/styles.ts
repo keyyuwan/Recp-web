@@ -1,6 +1,10 @@
 import styled from "styled-components"
 
-export const NavContainer = styled.nav`
+interface NavContainerProps {
+  isBackgroundRed: boolean
+}
+
+export const NavContainer = styled.nav<NavContainerProps>`
   margin-left: 4rem;
 
   a + a {
@@ -8,7 +12,9 @@ export const NavContainer = styled.nav`
   }
 
   a.active {
-    border-bottom: 1.5px solid var(--red);
+    border-bottom: 1.5px solid
+      ${({ isBackgroundRed }) =>
+        isBackgroundRed ? "var(--gray-50)" : "var(--red)"};
   }
 
   @media (max-width: 767px) {

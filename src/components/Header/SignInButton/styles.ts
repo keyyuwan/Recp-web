@@ -1,14 +1,20 @@
 import styled from "styled-components"
 
-export const Container = styled.button`
+interface ContainerProps {
+  isBackgroundRed: boolean
+}
+
+export const Container = styled.button<ContainerProps>`
   margin-left: auto;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: var(--red);
-  color: var(--white);
+  background: ${({ isBackgroundRed }) =>
+    isBackgroundRed ? "var(--gray-50)" : "var(--red)"};
+  color: ${({ isBackgroundRed }) =>
+    isBackgroundRed ? "var(--red)" : "var(--gray-50)"};
 
   height: 3rem;
   border-radius: 3rem;

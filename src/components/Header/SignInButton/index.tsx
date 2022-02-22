@@ -1,9 +1,13 @@
 import { FaGoogle } from "react-icons/fa"
 import { Container } from "./styles"
 
-export function SignInButton() {
+interface SignInButtonProps {
+  isBackgroundRed: boolean
+}
+
+export function SignInButton({ isBackgroundRed }: SignInButtonProps) {
   return (
-    <Container>
+    <Container isBackgroundRed={isBackgroundRed}>
       <FaGoogle />
       Sign In with Google
     </Container>

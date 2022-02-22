@@ -1,9 +1,13 @@
 import { ActiveLink } from "../ActiveLink"
 import { NavContainer } from "./styles"
 
-export function NavBar() {
+interface NavBarProps {
+  isBackgroundRed: boolean
+}
+
+export function NavBar({ isBackgroundRed }: NavBarProps) {
   return (
-    <NavContainer>
+    <NavContainer isBackgroundRed={isBackgroundRed}>
       <ActiveLink activeClassName="active" href="/">
         <a>Home</a>
       </ActiveLink>
