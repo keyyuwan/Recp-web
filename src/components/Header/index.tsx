@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { AiOutlineMenu } from "react-icons/ai"
 import { NavBar } from "./NavBar"
 import { SignInButton } from "./SignInButton"
@@ -29,7 +30,9 @@ export function Header() {
         <AiOutlineMenu size={24} />
       </DrawerButton>
 
-      <h1>RECP</h1>
+      <Link href="/">
+        <h1>RECP</h1>
+      </Link>
 
       <NavBar isBackgroundRed={isBackgroundRed} />
 

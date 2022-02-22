@@ -58,13 +58,20 @@ export function initServer() {
             Math.random() * 1000
           )}`
         },
+        description() {
+          return capitalize(faker.lorem.paragraphs(2))
+        },
         ingredients() {
           const ingredients = faker.helpers.uniqueArray(
             faker.word.noun,
             5
           )
 
-          return ingredients
+          const ingredientsFormated = ingredients.map((ingredient) =>
+            capitalize(ingredient)
+          )
+
+          return ingredientsFormated
         },
         preparationSteps() {
           const preparationSteps = faker.helpers.uniqueArray(
@@ -72,7 +79,11 @@ export function initServer() {
             5
           )
 
-          return preparationSteps
+          const preparationStepsFormated = preparationSteps.map(
+            (ingredient) => capitalize(ingredient)
+          )
+
+          return preparationStepsFormated
         },
         country() {
           const country = faker.random.arrayElement(countries)
@@ -84,10 +95,14 @@ export function initServer() {
         },
         afterCreate(recipe, server) {
           if (!recipe.user) {
-            return recipe.update({
+            recipe.update({
               user: server.create("user"),
             })
           }
+
+          return recipe.update({
+            slug: faker.helpers.slugify(recipe.name).toLowerCase(),
+          })
         },
       }),
     },

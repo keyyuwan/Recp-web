@@ -30,6 +30,7 @@ export const Container = styled.header<ContainerProps>`
 
   h1 {
     font-size: 2rem;
+    cursor: pointer;
   }
 `
 

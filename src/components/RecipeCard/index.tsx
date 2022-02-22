@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Container } from "./styles"
 
 interface RecipeCardProps {
@@ -7,6 +8,7 @@ interface RecipeCardProps {
   countryImage: string
   authorName: string
   authorImage: string
+  slug: string
 }
 
 export function RecipeCard({
@@ -16,23 +18,26 @@ export function RecipeCard({
   countryImage,
   authorName,
   authorImage,
+  slug,
 }: RecipeCardProps) {
   return (
-    <Container>
-      <img src={recipeImage} alt={name} />
-      <div className="card-info">
-        <h2>{name}</h2>
+    <Link href={`/recipes/${slug}`}>
+      <Container>
+        <img src={recipeImage} alt={name} />
+        <div className="card-info">
+          <h2>{name}</h2>
 
-        <div className="country">
-          <img src={countryImage} alt={countryName} />
-          <p>{countryName}</p>
-        </div>
+          <div className="country">
+            <img src={countryImage} alt={countryName} />
+            <p>{countryName}</p>
+          </div>
 
-        <div className="author">
-          <img src={authorImage} alt={authorName} />
-          <p>{authorName}</p>
+          <div className="author">
+            <img src={authorImage} alt={authorName} />
+            <p>{authorName}</p>
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </Link>
   )
 }
