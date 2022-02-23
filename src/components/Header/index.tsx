@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { AiOutlineMenu } from "react-icons/ai"
+import { useDrawer } from "../../contexts/DrawerContext"
 import { NavBar } from "./NavBar"
 import { SignInButton } from "./SignInButton"
+import { Drawer } from "../Drawer"
 import { Container, DrawerButton } from "./styles"
 
 export function Header() {
@@ -24,9 +26,11 @@ export function Header() {
       : setIsBackgroundRed(false)
   }
 
+  const { handleOpen } = useDrawer()
+
   return (
     <Container isBackgroundRed={isBackgroundRed}>
-      <DrawerButton>
+      <DrawerButton onClick={handleOpen}>
         <AiOutlineMenu size={24} />
       </DrawerButton>
 

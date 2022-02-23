@@ -1,6 +1,8 @@
 import { AppProps } from "next/app"
-import { Header } from "../components/Header"
 import { initServer } from "../services/mirage"
+import { DrawerProvider } from "../contexts/DrawerContext"
+import { Header } from "../components/Header"
+import { Drawer } from "../components/Drawer"
 import { GlobalStyle } from "../styles/global"
 
 if (process.env.NODE_ENV === "development") {
@@ -9,11 +11,13 @@ if (process.env.NODE_ENV === "development") {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <DrawerProvider>
       <GlobalStyle />
+
+      <Drawer />
       <Header />
       <Component {...pageProps} />
-    </>
+    </DrawerProvider>
   )
 }
 
