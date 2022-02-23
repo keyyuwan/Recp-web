@@ -1,4 +1,5 @@
 import { AppProps } from "next/app"
+import { SessionProvider } from "next-auth/react"
 import { initServer } from "../services/mirage"
 import { DrawerProvider } from "../contexts/DrawerContext"
 import { Header } from "../components/Header"
@@ -11,13 +12,15 @@ if (process.env.NODE_ENV === "development") {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <DrawerProvider>
-      <GlobalStyle />
+    <SessionProvider session={pageProps.session}>
+      <DrawerProvider>
+        <GlobalStyle />
 
-      <Drawer />
-      <Header />
-      <Component {...pageProps} />
-    </DrawerProvider>
+        <Drawer />
+        <Header />
+        <Component {...pageProps} />
+      </DrawerProvider>
+    </SessionProvider>
   )
 }
 

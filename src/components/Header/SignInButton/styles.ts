@@ -27,6 +27,15 @@ export const Container = styled.button<ContainerProps>`
   }
 
   svg {
+    height: 20px;
+    width: 20px;
+  }
+
+  svg:first-child {
     margin-right: 1rem;
+  }
+
+  svg.closeIcon {
+    margin-left: 1rem;
   }
 `
