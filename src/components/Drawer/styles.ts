@@ -27,6 +27,7 @@ export const Container = styled.aside`
 
   .close-button {
     margin-left: auto;
+    cursor: pointer;
   }
 `
 

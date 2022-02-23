@@ -6,6 +6,7 @@ export const Container = styled.div`
   gap: 1rem;
 
   color: var(--gray-50);
+  cursor: pointer;
 
   strong {
     font-size: 1.2rem;

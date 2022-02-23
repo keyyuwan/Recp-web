@@ -35,6 +35,8 @@ export const Container = styled.header<ContainerProps>`
 `
 
 export const DrawerButton = styled.div`
+  cursor: pointer;
+
   svg {
     margin-right: 1.5rem;
   }
