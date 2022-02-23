@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import Head from "next/head"
+import Link from "next/link"
 import { api } from "../../services/api"
 import { Recipe as IRecipe } from "."
 import { Container, RecipeInfo, Footer } from "./recipe"
@@ -67,15 +68,17 @@ export default function Recipe() {
             <p>{recipe.country.name}</p>
           </div>
 
-          <div className="wrapper">
-            <h2>Published by</h2>
-            <img
-              src={recipe.user.avatar}
-              alt={recipe.user.name}
-              className="author-image"
-            />
-            <p>{recipe.user.name}</p>
-          </div>
+          <Link href={`/user/${recipe.user.id}`}>
+            <div className="wrapper">
+              <h2>Published by</h2>
+              <img
+                src={recipe.user.avatar}
+                alt={recipe.user.name}
+                className="author-image"
+              />
+              <p>{recipe.user.name}</p>
+            </div>
+          </Link>
         </Footer>
       </Container>
     </>

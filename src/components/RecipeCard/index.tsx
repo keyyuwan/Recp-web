@@ -9,6 +9,7 @@ interface RecipeCardProps {
   countryImage: string
   authorName: string
   authorImage: string
+  authorId: string
 }
 
 export function RecipeCard({
@@ -19,6 +20,7 @@ export function RecipeCard({
   countryImage,
   authorName,
   authorImage,
+  authorId,
 }: RecipeCardProps) {
   return (
     <Link href={`/recipes/${id}`}>
@@ -32,10 +34,12 @@ export function RecipeCard({
             <p>{countryName}</p>
           </div>
 
-          <div className="author">
-            <img src={authorImage} alt={authorName} />
-            <p>{authorName}</p>
-          </div>
+          <Link href={`/user/${authorId}`}>
+            <div className="author">
+              <img src={authorImage} alt={authorName} />
+              <p>{authorName}</p>
+            </div>
+          </Link>
         </div>
       </Container>
     </Link>

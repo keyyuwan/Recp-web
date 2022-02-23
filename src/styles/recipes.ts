@@ -16,7 +16,7 @@ export const CardsContainer = styled.div`
 
   @media (min-width: 768px) {
     display: grid;
-    grid-template: repeat(3, 1fr) / repeat(3, 320px);
+    grid-template: 1fr / repeat(3, 320px);
     justify-content: center;
     gap: 2rem;
   }

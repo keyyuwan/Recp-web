@@ -50,6 +50,10 @@ export const Container = styled.div`
         height: 32px;
         border-radius: 50%;
       }
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 

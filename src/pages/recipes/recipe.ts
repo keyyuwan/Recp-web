@@ -85,5 +85,13 @@ export const Footer = styled.footer`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .wrapper {
+      cursor: pointer;
+
+      p:hover {
+        text-decoration: underline;
+      }
+    }
   }
 `

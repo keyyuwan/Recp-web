@@ -5,11 +5,12 @@ import { Country } from "../../utils/countries"
 import { RecipeCard } from "../../components/RecipeCard"
 import { Container, CardsContainer } from "../../styles/recipes"
 
-interface User {
+export interface User {
   id: string
   name: string
   avatar: string
   email: string
+  recipes: Recipe[]
 }
 
 export interface Recipe {
@@ -52,6 +53,7 @@ export default function Recipes() {
               countryImage={recipe.country.image}
               authorName={recipe.user.name}
               authorImage={recipe.user.avatar}
+              authorId={recipe.user.id}
             />
           ))}
         </CardsContainer>
