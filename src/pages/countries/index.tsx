@@ -1,7 +1,8 @@
 import Head from "next/head"
-import { countries } from "../utils/countries"
-import { CountryCard } from "../components/CountryCard"
-import { Container, CardsContainer } from "../styles/countries"
+import Link from "next/link"
+import { countries } from "../../utils/countries"
+import { CountryCard } from "../../components/CountryCard"
+import { Container, CardsContainer } from "../../styles/countries"
 
 export default function Countries() {
   return (
@@ -17,6 +18,7 @@ export default function Countries() {
           {countries.map((country) => (
             <CountryCard
               key={country.id}
+              id={country.id}
               image={country.image}
               name={country.name}
             />

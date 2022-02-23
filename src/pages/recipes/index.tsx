@@ -49,6 +49,7 @@ export default function Recipes() {
               id={recipe.id}
               name={recipe.name}
               recipeImage={recipe.image}
+              countryId={recipe.country.id}
               countryName={recipe.country.name}
               countryImage={recipe.country.image}
               authorName={recipe.user.name}
