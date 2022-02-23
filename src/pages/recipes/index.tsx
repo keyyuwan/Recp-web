@@ -21,7 +21,6 @@ export interface Recipe {
   country: Country
   createdAt: string
   user: User
-  slug: string
 }
 
 export default function Recipes() {
@@ -46,7 +45,7 @@ export default function Recipes() {
           {recipes.map((recipe) => (
             <RecipeCard
               key={recipe.id}
-              slug={recipe.slug}
+              id={recipe.id}
               name={recipe.name}
               recipeImage={recipe.image}
               countryName={recipe.country.name}

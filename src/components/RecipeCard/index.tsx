@@ -2,26 +2,26 @@ import Link from "next/link"
 import { Container } from "./styles"
 
 interface RecipeCardProps {
+  id: string
   name: string
   recipeImage: string
   countryName: string
   countryImage: string
   authorName: string
   authorImage: string
-  slug: string
 }
 
 export function RecipeCard({
+  id,
   name,
   recipeImage,
   countryName,
   countryImage,
   authorName,
   authorImage,
-  slug,
 }: RecipeCardProps) {
   return (
-    <Link href={`/recipes/${slug}`}>
+    <Link href={`/recipes/${id}`}>
       <Container>
         <img src={recipeImage} alt={name} />
         <div className="card-info">

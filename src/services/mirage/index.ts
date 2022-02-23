@@ -59,7 +59,7 @@ export function initServer() {
           )}`
         },
         description() {
-          return capitalize(faker.lorem.paragraphs(2))
+          return faker.lorem.paragraphs(2)
         },
         ingredients() {
           const ingredients = faker.helpers.uniqueArray(
@@ -75,7 +75,7 @@ export function initServer() {
         },
         preparationSteps() {
           const preparationSteps = faker.helpers.uniqueArray(
-            faker.lorem.words,
+            () => faker.lorem.paragraph(1),
             5
           )
 
@@ -95,14 +95,10 @@ export function initServer() {
         },
         afterCreate(recipe, server) {
           if (!recipe.user) {
-            recipe.update({
+            return recipe.update({
               user: server.create("user"),
             })
           }
-
-          return recipe.update({
-            slug: faker.helpers.slugify(recipe.name).toLowerCase(),
-          })
         },
       }),
     },

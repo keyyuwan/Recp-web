@@ -11,19 +11,19 @@ interface RecipeInterface extends IRecipe {
 
 export default function Recipe() {
   const { query } = useRouter()
-  const { slug } = query
+  const { id } = query
 
-  const [recipes, setRecipes] = useState<RecipeInterface[]>([])
+  const [recipe, setRecipe] = useState({} as RecipeInterface)
 
   useEffect(() => {
     api
-      .get("/recipes")
-      .then((response) => setRecipes(response.data.recipes))
+      .get(`/recipes/${id}`)
+      .then((response) => setRecipe(response.data.recipe))
   }, [])
 
-  const recipe = recipes.find((recipe) => recipe.slug === slug)
+  const isRecipeEmpty = Object.keys(recipe).length === 0
 
-  return !!recipe ? (
+  return !isRecipeEmpty ? (
     <>
       <Head>
         <title>{recipe.name} | Recp</title>
