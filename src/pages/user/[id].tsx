@@ -3,8 +3,9 @@ import { useRouter } from "next/router"
 import Link from "next/link"
 import { api } from "../../services/api"
 import { User as IUser } from "../recipes/index"
-import { Container, Recipes } from "./styles"
 import { RecipeCard } from "../../components/RecipeCard"
+import { UserInfo } from "../../components/User/UserInfo"
+import { Container, Recipes } from "./styles"
 
 export default function User() {
   const { query } = useRouter()
@@ -22,14 +23,11 @@ export default function User() {
 
   return !isUserEmpty ? (
     <Container>
-      <div className="user">
-        <img src={user.avatar} alt={user.name} />
-
-        <div className="user-info">
-          <h1>{user.name}</h1>
-          <p>{user.email}</p>
-        </div>
-      </div>
+      <UserInfo
+        avatar={user.avatar}
+        name={user.name}
+        email={user.email}
+      />
 
       <Recipes>
         <h2 className="title">Recipes</h2>
