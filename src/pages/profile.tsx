@@ -1,7 +1,7 @@
-import { GetServerSideProps } from "next"
-import { getSession, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { UserInfo } from "../components/User/UserInfo"
 import { FaPlus } from "react-icons/fa"
+import { withSSRAuth } from "../utils/withSSRAuth"
 import { Container, RegisterRecipeButton } from "../styles/profile"
 
 export default function Profile() {
@@ -22,17 +22,8 @@ export default function Profile() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-}) => {
-  const session = await getSession({ req })
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    }
+export const getServerSideProps = withSSRAuth(async () => {
+  return {
+    props: {},
   }
-}
+})

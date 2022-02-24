@@ -4,6 +4,7 @@ import Head from "next/head"
 import Link from "next/link"
 import { api } from "../../services/api"
 import { Recipe as IRecipe } from "."
+import { withSSRAuth } from "../../utils/withSSRAuth"
 import { Container, RecipeInfo, Footer } from "./recipe"
 
 interface RecipeInterface extends IRecipe {
@@ -84,3 +85,9 @@ export default function Recipe() {
     </>
   ) : null
 }
+
+export const getServerSideProps = withSSRAuth(async () => {
+  return {
+    props: {},
+  }
+})
