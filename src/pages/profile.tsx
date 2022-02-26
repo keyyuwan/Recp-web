@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react"
+import Link from "next/link"
 import { UserInfo } from "../components/User/UserInfo"
 import { FaPlus } from "react-icons/fa"
 import { withSSRAuth } from "../utils/withSSRAuth"
@@ -14,10 +15,13 @@ export default function Profile() {
         name={session.user.name}
         email={session.user.email}
       />
-      <RegisterRecipeButton>
-        <FaPlus />
-        Register Recipe
-      </RegisterRecipeButton>
+
+      <Link href="/register">
+        <RegisterRecipeButton>
+          <FaPlus />
+          Register Recipe
+        </RegisterRecipeButton>
+      </Link>
     </Container>
   )
 }

@@ -1,0 +1,63 @@
+import styled from "styled-components"
+
+export const Container = styled.div`
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  .content {
+    margin-top: 2rem;
+
+    h1 {
+      color: var(--red-500);
+    }
+
+    img {
+      margin-top: 1.5rem;
+      width: 240px;
+      height: 240px;
+    }
+  }
+`
+
+export const Form = styled.form`
+  margin-top: 2rem;
+
+  > div + div {
+    margin-top: 1.5rem;
+  }
+
+  > header {
+    margin: 3rem 0 1rem;
+  }
+
+  button.register {
+    margin: 2rem 0;
+    height: 40px;
+    width: 100%;
+    border-radius: 8px;
+
+    font-weight: 700;
+
+    background: var(--red-500);
+    color: var(--gray-50);
+  }
+`
+
+export const CountyField = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  > label {
+    color: var(--red-400);
+    font-weight: 700;
+  }
+
+  select {
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid var(--red-400);
+    outline: 0;
+  }
+`
