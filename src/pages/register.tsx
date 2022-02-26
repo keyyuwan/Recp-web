@@ -1,5 +1,7 @@
 import { FormEvent } from "react"
 import { withSSRAuth } from "../utils/withSSRAuth"
+import { countries } from "../utils/countries"
+import { sortArrayAlphabet } from "../utils/sortArrayAlphabet"
 import { Input } from "../components/Form/Input"
 import { FormAddInput } from "../components/Form/FormAddInput"
 import { Container, Form, CountyField } from "../styles/register"
@@ -8,6 +10,8 @@ export default function Register() {
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
   }
+
+  const sortedCountries = sortArrayAlphabet(countries)
 
   return (
     <Container>
@@ -44,9 +48,9 @@ export default function Register() {
           <CountyField>
             <label htmlFor="country">Country</label>
             <select name="country" id="country">
-              <option value="">Argentina</option>
-              <option value="">Brazil</option>
-              <option value="">South Africa</option>
+              {sortedCountries.map((country) => (
+                <option value={country.id}>{country.name}</option>
+              ))}
             </select>
           </CountyField>
 
