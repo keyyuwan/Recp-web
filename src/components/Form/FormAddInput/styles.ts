@@ -19,3 +19,17 @@ export const Header = styled.header`
     background: 0;
   }
 `
+
+export const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .remove {
+    cursor: pointer;
+
+    svg {
+      color: var(--red-500);
+    }
+  }
+`

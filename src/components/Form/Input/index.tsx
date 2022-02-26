@@ -5,6 +5,7 @@ interface InputProps {
   label: string
   isTextarea?: boolean
   isIngredientInput?: boolean
+  textAreaRows?: number
 }
 
 export function Input({
@@ -12,13 +13,14 @@ export function Input({
   label,
   isTextarea = false,
   isIngredientInput = false,
+  textAreaRows,
 }: InputProps) {
   return (
     <Container isIngredientInput={isIngredientInput}>
       <label htmlFor={name}>{label}</label>
 
       {isTextarea ? (
-        <textarea name="description" id="description" rows={3} />
+        <textarea name={name} id={name} rows={textAreaRows} />
       ) : (
         <input name={name} id={name} />
       )}

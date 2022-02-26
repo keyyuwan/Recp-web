@@ -25,6 +25,7 @@ export const Container = styled.div<ContainerProps>`
 
   input,
   textarea {
+    width: 100%;
     background: 0;
     border-radius: 8px;
     border: 2px solid var(--red-400);
@@ -32,7 +33,6 @@ export const Container = styled.div<ContainerProps>`
   }
 
   input {
-    width: 100%;
     height: 40px;
     padding: 0 1rem;
   }

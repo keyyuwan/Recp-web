@@ -20,7 +20,12 @@ export default function Register() {
         <Form onSubmit={handleSubmit}>
           <Input name="name" label="Name" />
           <Input name="image" label="Image URL" />
-          <Input name="description" label="Description" isTextarea />
+          <Input
+            name="description"
+            label="Description"
+            isTextarea
+            textAreaRows={3}
+          />
 
           <FormAddInput
             name="ingredient"
@@ -32,6 +37,8 @@ export default function Register() {
             name="preparation_step"
             label="Preparation Steps"
             buttonTitle="Add Step"
+            isTextarea
+            textAreaRows={1}
           />
 
           <CountyField>
