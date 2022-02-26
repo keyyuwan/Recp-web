@@ -12,8 +12,10 @@ export default function Register() {
   return (
     <Container>
       <div className="content">
-        <h1>Register your recipe</h1>
-        <img src="/images/register.svg" alt="Register Recipe" />
+        <div className="title-image">
+          <h1>Register your recipe</h1>
+          <img src="/images/register.svg" alt="Register Recipe" />
+        </div>
 
         <Form onSubmit={handleSubmit}>
           <Input name="name" label="Name" />

@@ -25,6 +25,7 @@ export const Container = styled.div<ContainerProps>`
 
   input,
   textarea {
+    background: 0;
     border-radius: 8px;
     border: 2px solid var(--red-400);
     outline: 0;

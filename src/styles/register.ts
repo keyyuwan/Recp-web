@@ -17,6 +17,18 @@ export const Container = styled.div`
       width: 240px;
       height: 240px;
     }
+
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 1rem;
+
+      img {
+        margin-top: 2rem;
+        width: 280px;
+        height: 280px;
+      }
+    }
   }
 `
 
@@ -41,6 +53,12 @@ export const Form = styled.form`
 
     background: var(--red-500);
     color: var(--gray-50);
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
   }
 `
 
@@ -55,9 +73,11 @@ export const CountyField = styled.div`
   }
 
   select {
+    background: 0;
     height: 40px;
     border-radius: 8px;
     border: 2px solid var(--red-400);
     outline: 0;
+    padding: 0 1rem;
   }
 `

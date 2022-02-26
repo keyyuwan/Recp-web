@@ -33,7 +33,7 @@ export const GlobalStyle = createGlobalStyle`
         background: var(--gray-50);
     }
 
-    body, input, textarea, button {
+    body, input, textarea, button, select {
         font: 500 1rem Poppins, sans-serif;
     }
 
