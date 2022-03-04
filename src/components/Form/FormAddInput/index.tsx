@@ -1,6 +1,11 @@
 import { useState } from "react"
 import { FaPlus } from "react-icons/fa"
 import { IoMdRemoveCircle } from "react-icons/io"
+import {
+  RegisterOptions,
+  useFieldArray,
+  Control,
+} from "react-hook-form"
 import { Input } from "../Input"
 import { Header, InputContainer } from "./styles"
 
@@ -10,6 +15,8 @@ interface FormAddInput {
   buttonTitle: string
   isTextarea?: boolean
   textAreaRows?: number
+  register: (name: string, options?: RegisterOptions) => void
+  control: Control
 }
 
 export function FormAddInput({
@@ -18,14 +25,20 @@ export function FormAddInput({
   buttonTitle,
   isTextarea = false,
   textAreaRows,
+  register,
+  control,
 }: FormAddInput) {
+  const { remove } = useFieldArray({ name, control })
+
   const [inputsCount, setInputsCount] = useState(1)
 
   function handleAddInput() {
     setInputsCount((prevState) => prevState + 1)
   }
 
-  function handleRemoveInput() {
+  function handleRemoveInput(index: number) {
+    remove(index) // removes an input at a certain position
+
     setInputsCount((prevState) => prevState - 1)
   }
 
@@ -39,35 +52,27 @@ export function FormAddInput({
         </button>
       </Header>
 
-      {[...Array(inputsCount)].map((_, index) => {
-        if (index + 1 > 1) {
-          return (
-            <InputContainer>
-              <Input
-                name={name}
-                label={`${index + 1}.`}
-                isTextarea={isTextarea}
-                isIngredientInput
-                textAreaRows={textAreaRows}
-              />
+      {[...Array(inputsCount)].map((_, index) => (
+        <InputContainer key={index}>
+          <Input
+            name={name}
+            label={`${index + 1}.`}
+            isTextarea={isTextarea}
+            isIngredientInput
+            textAreaRows={textAreaRows}
+            {...register(`${name}.${index}`)}
+          />
 
-              <div className="remove" onClick={handleRemoveInput}>
-                <IoMdRemoveCircle size={20} />
-              </div>
-            </InputContainer>
-          )
-        } else {
-          return (
-            <Input
-              name={name}
-              label={`${index + 1}.`}
-              isTextarea={isTextarea}
-              isIngredientInput
-              textAreaRows={textAreaRows}
-            />
-          )
-        }
-      })}
+          {index + 1 > 1 && (
+            <div
+              className="remove"
+              onClick={() => handleRemoveInput(index)}
+            >
+              <IoMdRemoveCircle size={20} />
+            </div>
+          )}
+        </InputContainer>
+      ))}
     </>
   )
 }
