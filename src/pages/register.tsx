@@ -1,4 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form"
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
 import { withSSRAuth } from "../utils/withSSRAuth"
 import { countries } from "../utils/countries"
 import { sortArrayAlphabet } from "../utils/sortArrayAlphabet"
@@ -15,8 +17,35 @@ interface RegisterFormData {
   country: string
 }
 
+const registerFormSchema = yup.object().shape({
+  name: yup.string().required("Recipe name is required"),
+  image: yup.string().required("Image URL is required"),
+  description: yup.string().required("Description is required"),
+  ingredients: yup
+    .array()
+    .of(
+      yup.string().required("Recipe must have at least 1 ingredient")
+    )
+    .min(1),
+  preparation_steps: yup
+    .array()
+    .of(
+      yup
+        .string()
+        .required("Recipe must have at least 1 preparation step")
+    )
+    .min(1),
+})
+
 export default function Register() {
-  const { register, control, handleSubmit } = useForm()
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(registerFormSchema),
+  })
 
   const handleRegister: SubmitHandler<RegisterFormData> = (
     values
@@ -35,10 +64,17 @@ export default function Register() {
         </div>
 
         <Form onSubmit={handleSubmit(handleRegister)}>
-          <Input name="name" label="Name" {...register("name")} />
+          <Input
+            name="name"
+            label="Name"
+            errorText={errors.name?.message}
+            {...register("name")}
+          />
           <Input
             name="image"
             label="Image URL"
+            errorText={errors.image?.message}
+            placeholder="Example: https://github.com/keyyuwan.png"
             {...register("image")}
           />
           <Input
@@ -46,6 +82,7 @@ export default function Register() {
             label="Description"
             isTextarea
             textAreaRows={3}
+            errorText={errors.description?.message}
             {...register("description")}
           />
 
@@ -55,6 +92,9 @@ export default function Register() {
             buttonTitle="Add Ingredient"
             register={register}
             control={control}
+            errorText={
+              errors.ingredients && errors.ingredients[0]?.message
+            }
           />
 
           <FormAddInput
@@ -65,6 +105,10 @@ export default function Register() {
             textAreaRows={1}
             register={register}
             control={control}
+            errorText={
+              errors.preparation_steps &&
+              errors.preparation_steps[0]?.message
+            }
           />
 
           <CountyField>

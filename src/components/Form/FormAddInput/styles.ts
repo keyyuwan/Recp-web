@@ -33,3 +33,7 @@ export const InputContainer = styled.div`
     }
   }
 `
+
+export const ErrorText = styled.p`
+  margin: 0.5rem;
+`

@@ -7,7 +7,7 @@ import {
   Control,
 } from "react-hook-form"
 import { Input } from "../Input"
-import { Header, InputContainer } from "./styles"
+import { Header, InputContainer, ErrorText } from "./styles"
 
 interface FormAddInput {
   name: string
@@ -17,6 +17,7 @@ interface FormAddInput {
   textAreaRows?: number
   register: (name: string, options?: RegisterOptions) => void
   control: Control
+  errorText: string
 }
 
 export function FormAddInput({
@@ -27,6 +28,7 @@ export function FormAddInput({
   textAreaRows,
   register,
   control,
+  errorText,
 }: FormAddInput) {
   const { remove } = useFieldArray({ name, control })
 
@@ -53,25 +55,29 @@ export function FormAddInput({
       </Header>
 
       {[...Array(inputsCount)].map((_, index) => (
-        <InputContainer key={index}>
-          <Input
-            name={name}
-            label={`${index + 1}.`}
-            isTextarea={isTextarea}
-            isIngredientInput
-            textAreaRows={textAreaRows}
-            {...register(`${name}.${index}`)}
-          />
+        <>
+          <InputContainer key={index}>
+            <Input
+              name={name}
+              label={`${index + 1}.`}
+              isTextarea={isTextarea}
+              isIngredientInput
+              textAreaRows={textAreaRows}
+              {...register(`${name}.${index}`)}
+            />
 
-          {index + 1 > 1 && (
-            <div
-              className="remove"
-              onClick={() => handleRemoveInput(index)}
-            >
-              <IoMdRemoveCircle size={20} />
-            </div>
-          )}
-        </InputContainer>
+            {index + 1 > 1 && (
+              <div
+                className="remove"
+                onClick={() => handleRemoveInput(index)}
+              >
+                <IoMdRemoveCircle size={20} />
+              </div>
+            )}
+          </InputContainer>
+
+          {!!errorText && <ErrorText>{errorText}</ErrorText>}
+        </>
       ))}
     </>
   )

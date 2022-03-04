@@ -63,6 +63,7 @@ export const Form = styled.form`
 `
 
 export const CountyField = styled.div`
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;

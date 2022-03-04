@@ -12,6 +12,7 @@ interface InputProps
   isTextarea?: boolean
   isIngredientInput?: boolean
   textAreaRows?: number
+  errorText?: string
 }
 
 const InputBase: ForwardRefRenderFunction<
@@ -24,6 +25,7 @@ const InputBase: ForwardRefRenderFunction<
     isTextarea = false,
     isIngredientInput = false,
     textAreaRows,
+    errorText,
     ...rest
   },
   ref
@@ -43,6 +45,8 @@ const InputBase: ForwardRefRenderFunction<
       ) : (
         <input name={name} id={name} ref={ref} {...rest} />
       )}
+
+      {!!errorText && <p>{errorText}</p>}
     </Container>
   )
 }
