@@ -1,4 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useEffect } from "react"
 import { FaGoogle } from "react-icons/fa"
 import { FiX } from "react-icons/fi"
 import { Container } from "./styles"
