@@ -2,37 +2,32 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import { api } from "../../services/api"
-import { Recipe } from "../recipes/index"
 import { RecipeCard } from "../../components/RecipeCard"
-import { Country as ICountry } from "../../utils/countries"
+import { Recipe } from "../recipes"
 import { Container, Recipes } from "./country"
+
+interface ICountry {
+  id: string
+  name: string
+  image: string
+  recipes: Recipe[]
+}
 
 export default function Country() {
   const { query } = useRouter()
   const { id } = query
 
   const [country, setCountry] = useState({} as ICountry)
-  const [countryRecipes, setCountryRecipes] = useState<Recipe[]>([])
 
   useEffect(() => {
-    api.get("/recipes").then((response) => {
-      const { recipes } = response.data
-
-      const { country: recipeCountry } = recipes.find(
-        (recipe) => recipe.country.id === id
-      )
-      setCountry(recipeCountry)
-
-      const countryRecipes = recipes.filter(
-        (recipe) => recipe.country.id === id
-      )
-      setCountryRecipes(countryRecipes)
-    })
+    api
+      .get(`/countries/${id}`)
+      .then((response) => setCountry(response.data))
   }, [])
 
-  const isCountryEmpty = Object.keys(countryRecipes).length === 0
+  const isCountryEmpty = Object.keys(country).length === 0
 
-  return !isCountryEmpty && !!countryRecipes ? (
+  return !isCountryEmpty ? (
     <Container>
       <div className="country">
         <img src={country.image} alt={country.name} />
@@ -43,18 +38,12 @@ export default function Country() {
         <h2 className="title">Recipes</h2>
 
         <div className="recipes-cards-container">
-          {countryRecipes.map((recipe) => (
+          {country.recipes.map((recipe) => (
             <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
               <RecipeCard
-                id={recipe.id}
-                name={recipe.name}
-                recipeImage={recipe.image}
-                countryId={recipe.country.id}
-                countryName={recipe.country.name}
-                countryImage={recipe.country.image}
-                authorName={recipe.user.name}
-                authorImage={recipe.user.avatar}
-                authorId={recipe.user.id}
+                data={recipe}
+                countryOwner={country}
+                userOwner={recipe.userOwner}
               />
             </Link>
           ))}

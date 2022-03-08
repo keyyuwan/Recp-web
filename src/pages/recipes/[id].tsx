@@ -15,7 +15,9 @@ export default function Recipe() {
   const { query } = useRouter()
   const { id } = query
 
-  const [recipe, setRecipe] = useState({} as RecipeInterface)
+  const [recipe, setRecipe] = useState<RecipeInterface>(
+    {} as RecipeInterface
+  )
 
   useEffect(() => {
     api
@@ -53,31 +55,33 @@ export default function Recipe() {
           <h2>Preparation Steps:</h2>
 
           <ol>
-            {recipe.preparationSteps.map((step) => (
+            {recipe.preparation_steps.map((step) => (
               <li key={step}>{step}</li>
             ))}
           </ol>
         </div>
 
         <Footer>
-          <div className="wrapper">
-            <h2>Dish origin</h2>
-            <img
-              src={recipe.country.image}
-              alt={recipe.country.name}
-            />
-            <p>{recipe.country.name}</p>
-          </div>
+          <Link href={`/countries/${recipe.countryOwner.id}`}>
+            <div className="wrapper">
+              <h2>Dish origin</h2>
+              <img
+                src={recipe.countryOwner.image}
+                alt={recipe.countryOwner.name}
+              />
+              <p>{recipe.countryOwner.name}</p>
+            </div>
+          </Link>
 
-          <Link href={`/user/${recipe.user.id}`}>
+          <Link href={`/user/${recipe.userOwner.id}`}>
             <div className="wrapper">
               <h2>Published by</h2>
               <img
-                src={recipe.user.avatar}
-                alt={recipe.user.name}
+                src={recipe.userOwner.avatar}
+                alt={recipe.userOwner.name}
                 className="author-image"
               />
-              <p>{recipe.user.name}</p>
+              <p>{recipe.userOwner.name}</p>
             </div>
           </Link>
         </Footer>

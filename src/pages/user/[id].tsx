@@ -14,9 +14,7 @@ export default function User() {
   const [user, setUser] = useState({} as IUser)
 
   useEffect(() => {
-    api
-      .get(`/users/${id}`)
-      .then((response) => setUser(response.data.user))
+    api.get(`/users/${id}`).then((response) => setUser(response.data))
   }, [])
 
   const isUserEmpty = Object.keys(user).length === 0
@@ -36,15 +34,9 @@ export default function User() {
           {user.recipes.map((recipe) => (
             <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
               <RecipeCard
-                id={recipe.id}
-                name={recipe.name}
-                recipeImage={recipe.image}
-                countryId={recipe.country.id}
-                countryName={recipe.country.name}
-                countryImage={recipe.country.image}
-                authorName={user.name}
-                authorImage={user.avatar}
-                authorId={user.id}
+                data={recipe}
+                countryOwner={recipe.countryOwner}
+                userOwner={user}
               />
             </Link>
           ))}

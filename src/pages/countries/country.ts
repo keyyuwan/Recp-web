@@ -15,8 +15,8 @@ export const Container = styled.div`
 
     @media (min-width: 768px) {
       img {
-        width: 480px;
-        height: 300px;
+        width: 430px;
+        height: 260px;
       }
     }
   }

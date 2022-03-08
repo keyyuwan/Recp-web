@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import Head from "next/head"
 import { api } from "../../services/api"
-import { Country } from "../../utils/countries"
 import { RecipeCard } from "../../components/RecipeCard"
+import { Country } from "../countries"
 import { Container, CardsContainer } from "../../styles/recipes"
 
 export interface User {
@@ -18,10 +18,10 @@ export interface Recipe {
   name: string
   image: string
   ingredients: string[]
-  preparationSteps: string[]
-  country: Country
+  preparation_steps: string[]
+  countryOwner: Country
   createdAt: string
-  user: User
+  userOwner: User
 }
 
 export default function Recipes() {
@@ -42,7 +42,12 @@ export default function Recipes() {
 
         <CardsContainer>
           {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} data={recipe} />
+            <RecipeCard
+              key={recipe.id}
+              data={recipe}
+              countryOwner={recipe.countryOwner}
+              userOwner={recipe.userOwner}
+            />
           ))}
         </CardsContainer>
       </Container>

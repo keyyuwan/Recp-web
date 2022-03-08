@@ -11,14 +11,18 @@ interface Recipe {
   id: string
   name: string
   image: string
-  country: Country
-  user: User
 }
 interface RecipeCardProps {
   data: Recipe
+  countryOwner: Country
+  userOwner: User
 }
 
-export function RecipeCard({ data }: RecipeCardProps) {
+export function RecipeCard({
+  data,
+  countryOwner,
+  userOwner,
+}: RecipeCardProps) {
   return (
     <Link href={`/recipes/${data.id}`}>
       <Container>
@@ -26,17 +30,17 @@ export function RecipeCard({ data }: RecipeCardProps) {
         <div className="card-info">
           <h2>{data.name}</h2>
 
-          <Link href={`/countries/${data.country.id}`}>
+          <Link href={`/countries/${countryOwner.id}`}>
             <div className="country">
-              <img src={data.country.image} alt={data.country.name} />
-              <p>{data.country.name}</p>
+              <img src={countryOwner.image} alt={countryOwner.name} />
+              <p>{countryOwner.name}</p>
             </div>
           </Link>
 
-          <Link href={`/user/${data.user.id}`}>
+          <Link href={`/user/${userOwner.id}`}>
             <div className="author">
-              <img src={data.user.avatar} alt={data.user.name} />
-              <p>{data.user.name}</p>
+              <img src={userOwner.avatar} alt={userOwner.name} />
+              <p>{userOwner.name}</p>
             </div>
           </Link>
         </div>
