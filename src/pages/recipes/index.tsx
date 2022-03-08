@@ -28,9 +28,7 @@ export default function Recipes() {
   const [recipes, setRecipes] = useState<Recipe[]>([])
 
   useEffect(() => {
-    api
-      .get("/recipes")
-      .then((response) => setRecipes(response.data.recipes))
+    api.get("/recipes").then((response) => setRecipes(response.data))
   }, [])
 
   return (
@@ -44,18 +42,7 @@ export default function Recipes() {
 
         <CardsContainer>
           {recipes.map((recipe) => (
-            <RecipeCard
-              key={recipe.id}
-              id={recipe.id}
-              name={recipe.name}
-              recipeImage={recipe.image}
-              countryId={recipe.country.id}
-              countryName={recipe.country.name}
-              countryImage={recipe.country.image}
-              authorName={recipe.user.name}
-              authorImage={recipe.user.avatar}
-              authorId={recipe.user.id}
-            />
+            <RecipeCard key={recipe.id} data={recipe} />
           ))}
         </CardsContainer>
       </Container>

@@ -1,47 +1,47 @@
 import Link from "next/link"
 import { Container } from "./styles"
 
-interface RecipeCardProps {
+interface Country {
   id: string
   name: string
-  recipeImage: string
-  countryId: string
-  countryName: string
-  countryImage: string
-  authorName: string
-  authorImage: string
-  authorId: string
+  image: string
 }
 
-export function RecipeCard({
-  id,
-  name,
-  recipeImage,
-  countryId,
-  countryName,
-  countryImage,
-  authorName,
-  authorImage,
-  authorId,
-}: RecipeCardProps) {
-  return (
-    <Link href={`/recipes/${id}`}>
-      <Container>
-        <img src={recipeImage} alt={name} />
-        <div className="card-info">
-          <h2>{name}</h2>
+interface User {
+  id: string
+  name: string
+  avatar: string
+}
+interface Recipe {
+  id: string
+  name: string
+  image: string
+  country: Country
+  user: User
+}
+interface RecipeCardProps {
+  data: Recipe
+}
 
-          <Link href={`/countries/${countryId}`}>
+export function RecipeCard({ data }: RecipeCardProps) {
+  return (
+    <Link href={`/recipes/${data.id}`}>
+      <Container>
+        <img src={data.image} alt={data.name} />
+        <div className="card-info">
+          <h2>{data.name}</h2>
+
+          <Link href={`/countries/${data.country.id}`}>
             <div className="country">
-              <img src={countryImage} alt={countryName} />
-              <p>{countryName}</p>
+              <img src={data.country.image} alt={data.country.name} />
+              <p>{data.country.name}</p>
             </div>
           </Link>
 
-          <Link href={`/user/${authorId}`}>
+          <Link href={`/user/${data.user.id}`}>
             <div className="author">
-              <img src={authorImage} alt={authorName} />
-              <p>{authorName}</p>
+              <img src={data.user.avatar} alt={data.user.name} />
+              <p>{data.user.name}</p>
             </div>
           </Link>
         </div>

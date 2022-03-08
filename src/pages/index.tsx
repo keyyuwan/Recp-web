@@ -1,4 +1,5 @@
 import Head from "next/head"
+import { useEffect } from "react"
 import { Container, Section } from "../styles/home"
 
 export default function Home() {

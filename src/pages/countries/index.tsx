@@ -1,5 +1,4 @@
 import Head from "next/head"
-import Link from "next/link"
 import { countries } from "../../utils/countries"
 import { CountryCard } from "../../components/CountryCard"
 import { Container, CardsContainer } from "../../styles/countries"
