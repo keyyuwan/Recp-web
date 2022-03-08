@@ -8,7 +8,7 @@ import { Container, RegisterRecipeButton } from "../styles/profile"
 export default function Profile() {
   const { data: session } = useSession()
 
-  return (
+  return !!session ? (
     <Container>
       <UserInfo
         avatar={session.user.image}
@@ -23,7 +23,7 @@ export default function Profile() {
         </RegisterRecipeButton>
       </Link>
     </Container>
-  )
+  ) : null
 }
 
 export const getServerSideProps = withSSRAuth(async () => {

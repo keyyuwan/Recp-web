@@ -20,7 +20,7 @@ export default function Recipe() {
   useEffect(() => {
     api
       .get(`/recipes/${id}`)
-      .then((response) => setRecipe(response.data.recipe))
+      .then((response) => setRecipe(response.data))
   }, [])
 
   const isRecipeEmpty = Object.keys(recipe).length === 0

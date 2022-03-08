@@ -29,6 +29,15 @@ export const Container = styled.div`
         height: 280px;
       }
     }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: 480px 1fr;
+
+      img {
+        width: 320px;
+        height: 320px;
+      }
+    }
   }
 `
 

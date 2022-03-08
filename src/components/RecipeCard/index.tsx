@@ -1,11 +1,6 @@
 import Link from "next/link"
+import { Country } from "../../pages/countries"
 import { Container } from "./styles"
-
-interface Country {
-  id: string
-  name: string
-  image: string
-}
 
 interface User {
   id: string

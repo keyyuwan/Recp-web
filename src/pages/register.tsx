@@ -1,11 +1,13 @@
+import { useEffect, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { api } from "../services/api"
 import { withSSRAuth } from "../utils/withSSRAuth"
-import { countries } from "../utils/countries"
 import { sortArrayAlphabet } from "../utils/sortArrayAlphabet"
 import { Input } from "../components/Form/Input"
 import { FormAddInput } from "../components/Form/FormAddInput"
+import { Country } from "./countries"
 import { Container, Form, CountyField } from "../styles/register"
 
 interface RegisterFormData {
@@ -38,6 +40,14 @@ const registerFormSchema = yup.object().shape({
 })
 
 export default function Register() {
+  const [countries, setCountries] = useState<Country[]>([])
+
+  useEffect(() => {
+    api
+      .get("/countries")
+      .then((response) => setCountries(response.data))
+  }, [])
+
   const {
     register,
     control,

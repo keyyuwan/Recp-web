@@ -1,9 +1,24 @@
+import { useEffect, useState } from "react"
 import Head from "next/head"
-import { countries } from "../../utils/countries"
+import { api } from "../../services/api"
 import { CountryCard } from "../../components/CountryCard"
 import { Container, CardsContainer } from "../../styles/countries"
 
+export interface Country {
+  id: string
+  name: string
+  image: string
+}
+
 export default function Countries() {
+  const [countries, setCountries] = useState<Country[]>([])
+
+  useEffect(() => {
+    api
+      .get("/countries")
+      .then((response) => setCountries(response.data))
+  }, [])
+
   return (
     <>
       <Head>
