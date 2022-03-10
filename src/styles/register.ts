@@ -54,7 +54,7 @@ export const Form = styled.form`
 
   button.register {
     margin: 2rem 0;
-    height: 40px;
+    height: 50px;
     width: 100%;
     border-radius: 8px;
 

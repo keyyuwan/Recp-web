@@ -22,6 +22,16 @@ export const Container = styled.div`
       li {
         font-size: 1.5rem;
         line-height: 2.5rem;
+
+        &.prep-step {
+          padding-bottom: 1.2rem;
+          margin-bottom: 1.2rem;
+          border-bottom: 1px solid var(--gray-500);
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
       }
 
       li::before {

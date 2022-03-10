@@ -56,7 +56,9 @@ export default function Recipe() {
 
           <ol>
             {recipe.preparation_steps.map((step) => (
-              <li key={step}>{step}</li>
+              <li key={step} className="prep-step">
+                {step}
+              </li>
             ))}
           </ol>
         </div>
