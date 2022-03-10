@@ -13,7 +13,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     if (!!session) {
-      api.defaults.headers.common["sub"] = session.sub as string
+      const sessionSub = session.sub as string
+
+      api.defaults.headers.common["sub"] = sessionSub
+
+      localStorage.setItem("@recp:sub", sessionSub)
     }
   }, [session])
 
