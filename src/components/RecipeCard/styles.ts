@@ -17,7 +17,7 @@ export const Container = styled.div`
     transform: scale(1.05);
   }
 
-  img {
+  img.food {
     width: 100%;
     height: 160px;
     border-radius: 5px 5px 0 0;

@@ -13,7 +13,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     if (!!session) {
-      api.defaults.headers.common["email"] = session.user.email
+      api.defaults.headers.common["sub"] = session.sub as string
     }
   }, [session])
 

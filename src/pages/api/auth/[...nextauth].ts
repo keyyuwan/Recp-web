@@ -10,12 +10,13 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user, account }) {
       try {
         axios.post("http://localhost:3003/api/users", {
           name: user.name,
           email: user.email,
           avatar: user.image,
+          sub: account.providerAccountId,
         })
 
         return true
@@ -24,6 +25,14 @@ export default NextAuth({
 
         return false
       }
+    },
+
+    async session({ session, token }) {
+      return { ...session, sub: token.sub }
+    },
+
+    async jwt({ token }) {
+      return token
     },
   },
 })

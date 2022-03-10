@@ -26,7 +26,7 @@ export function RecipeCard({
   return (
     <Link href={`/recipes/${data.id}`}>
       <Container>
-        <img src={data.image} alt={data.name} />
+        <img src={data.image} alt={data.name} className="food" />
         <div className="card-info">
           <h2>{data.name}</h2>
 
