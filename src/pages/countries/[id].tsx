@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from "next"
+import { GetServerSideProps } from "next"
 
 import { api } from "../../services/api"
 import { Recipe } from "../recipes"
@@ -36,14 +36,7 @@ export default function Country({ country }: CountryProps) {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  }
-}
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id } = ctx.params
 
   const { data } = await api.get(`/countries/${id}`)

@@ -1,33 +1,33 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+import { useEffect } from "react"
+import { GetStaticPaths, GetStaticProps } from "next"
+import Router from "next/router"
 import Head from "next/head"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
+
 import { api } from "../../services/api"
 import { Recipe as IRecipe } from "."
-import { withSSRAuth } from "../../utils/withSSRAuth"
+
 import { Container, RecipeInfo, Footer } from "./recipe"
 
 interface RecipeInterface extends IRecipe {
   description: string
 }
 
-export default function Recipe() {
-  const { query } = useRouter()
-  const { id } = query
+interface RecipeProps {
+  recipe: RecipeInterface
+}
 
-  const [recipe, setRecipe] = useState<RecipeInterface>(
-    {} as RecipeInterface
-  )
+export default function Recipe({ recipe }: RecipeProps) {
+  const { data: session } = useSession()
 
   useEffect(() => {
-    api
-      .get(`/recipes/${id}`)
-      .then((response) => setRecipe(response.data))
-  }, [])
+    if (!session) {
+      Router.push("/")
+    }
+  }, [session])
 
-  const isRecipeEmpty = Object.keys(recipe).length === 0
-
-  return !isRecipeEmpty ? (
+  return (
     <>
       <Head>
         <title>{recipe.name} | Recp</title>
@@ -89,11 +89,24 @@ export default function Recipe() {
         </Footer>
       </Container>
     </>
-  ) : null
+  )
 }
 
-export const getServerSideProps = withSSRAuth(async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    props: {},
+    paths: [],
+    fallback: "blocking",
   }
-})
+}
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const { id } = ctx.params
+
+  const { data } = await api.get(`/recipes/${id}`)
+
+  return {
+    props: {
+      recipe: data,
+    },
+  }
+}

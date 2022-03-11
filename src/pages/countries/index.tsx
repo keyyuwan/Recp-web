@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { GetStaticProps } from "next"
 import Head from "next/head"
 
 import { api } from "../../services/api"
@@ -13,15 +13,11 @@ export interface Country {
   image: string
 }
 
-export default function Countries() {
-  const [countries, setCountries] = useState<Country[]>([])
+interface CountriesProps {
+  countries: Country[]
+}
 
-  useEffect(() => {
-    api
-      .get("/countries")
-      .then((response) => setCountries(response.data))
-  }, [])
-
+export default function Countries({ countries }: CountriesProps) {
   return (
     <>
       <Head>
@@ -44,4 +40,15 @@ export default function Countries() {
       </Container>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data } = await api.get("/countries")
+
+  return {
+    props: {
+      countries: data,
+    },
+    revalidate: 60 * 60 * 24, // 24 hours
+  }
 }
