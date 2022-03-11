@@ -1,4 +1,7 @@
+import { MouseEvent } from "react"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
+import Router from "next/router"
 import { Country } from "../../pages/countries"
 import { Container } from "./styles"
 
@@ -6,6 +9,7 @@ interface User {
   id: string
   name: string
   avatar: string
+  email: string
 }
 interface Recipe {
   id: string
@@ -23,6 +27,27 @@ export function RecipeCard({
   countryOwner,
   userOwner,
 }: RecipeCardProps) {
+  const { data: session } = useSession()
+
+  const recipeOwnerIsUserAuth =
+    session?.user?.email === userOwner.email
+
+  function handleRedirectToCountry(
+    event: MouseEvent<HTMLDivElement>,
+    countryId: string
+  ) {
+    event.stopPropagation()
+    Router.push(`/countries/${countryId}`)
+  }
+
+  function handleRedirectToUserPage(
+    event: MouseEvent<HTMLDivElement>,
+    userId: string
+  ) {
+    event.stopPropagation()
+    Router.push(`/user/${userId}`)
+  }
+
   return (
     <Link href={`/recipes/${data.id}`}>
       <Container>
@@ -30,19 +55,27 @@ export function RecipeCard({
         <div className="card-info">
           <h2>{data.name}</h2>
 
-          <Link href={`/countries/${countryOwner.id}`}>
-            <div className="country">
-              <img src={countryOwner.image} alt={countryOwner.name} />
-              <p>{countryOwner.name}</p>
-            </div>
-          </Link>
+          <div
+            className="country"
+            onClick={(event) =>
+              handleRedirectToCountry(event, countryOwner.id)
+            }
+          >
+            <img src={countryOwner.image} alt={countryOwner.name} />
+            <p>{countryOwner.name}</p>
+          </div>
 
-          <Link href={`/user/${userOwner.id}`}>
-            <div className="author">
+          {recipeOwnerIsUserAuth ? null : (
+            <div
+              className="author"
+              onClick={(event) =>
+                handleRedirectToUserPage(event, userOwner.id)
+              }
+            >
               <img src={userOwner.avatar} alt={userOwner.name} />
               <p>{userOwner.name}</p>
             </div>
-          </Link>
+          )}
         </div>
       </Container>
     </Link>

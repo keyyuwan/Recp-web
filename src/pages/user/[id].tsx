@@ -19,7 +19,7 @@ export default function User() {
 
   const isUserEmpty = Object.keys(user).length === 0
 
-  const hasRecipes = user.recipes.length > 0
+  const hasRecipes = user?.recipes?.length > 0
 
   return !isUserEmpty ? (
     <Container>

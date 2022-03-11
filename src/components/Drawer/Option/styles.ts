@@ -4,6 +4,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding: 0.5rem;
 
   color: var(--gray-50);
   cursor: pointer;
