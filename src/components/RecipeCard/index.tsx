@@ -1,8 +1,8 @@
-import { MouseEvent } from "react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import Router from "next/router"
+
 import { Country } from "../../pages/countries"
+
 import { Container } from "./styles"
 
 interface User {
@@ -32,25 +32,6 @@ export function RecipeCard({
   const recipeOwnerIsUserAuth =
     session?.user?.email === userOwner.email
 
-  function handleRedirectToCountry(
-    event: MouseEvent<HTMLDivElement>,
-    countryId: string
-  ) {
-    event.stopPropagation()
-    Router.push(`/countries/${countryId}`)
-  }
-
-  function handleRedirectToUserPage(
-    event: MouseEvent<HTMLDivElement>,
-    userId: string
-  ) {
-    event.stopPropagation()
-
-    if (recipeOwnerIsUserAuth) return
-
-    Router.push(`/user/${userId}`)
-  }
-
   return (
     <Link href={`/recipes/${data.id}`}>
       <Container>
@@ -58,29 +39,27 @@ export function RecipeCard({
         <div className="card-info">
           <h2>{data.name}</h2>
 
-          <div
-            className="country"
-            onClick={(event) =>
-              handleRedirectToCountry(event, countryOwner.id)
-            }
-          >
-            <img src={countryOwner.image} alt={countryOwner.name} />
-            <p>{countryOwner.name}</p>
-          </div>
+          <Link href={`/countries/${countryOwner.id}`}>
+            <div className="country">
+              <img src={countryOwner.image} alt={countryOwner.name} />
+              <p>{countryOwner.name}</p>
+            </div>
+          </Link>
 
-          <div
-            className="author"
-            onClick={(event) =>
-              handleRedirectToUserPage(event, userOwner.id)
+          <Link
+            href={
+              !recipeOwnerIsUserAuth ? `/user/${userOwner.id}` : ""
             }
           >
-            <img
-              src={userOwner.avatar}
-              alt={userOwner.name}
-              referrerPolicy="no-referrer" // avoids 403 error to user google image
-            />
-            <p>{userOwner.name}</p>
-          </div>
+            <div className="author">
+              <img
+                src={userOwner.avatar}
+                alt={userOwner.name}
+                referrerPolicy="no-referrer" // avoids 403 error to user google image
+              />
+              <p>{userOwner.name}</p>
+            </div>
+          </Link>
         </div>
       </Container>
     </Link>

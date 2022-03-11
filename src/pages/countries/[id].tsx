@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import Link from "next/link"
-import { api } from "../../services/api"
-import { RecipeCard } from "../../components/RecipeCard"
-import { Recipe } from "../recipes"
-import { Container, Recipes } from "./country"
+import { GetStaticPaths, GetStaticProps } from "next"
 
+import { api } from "../../services/api"
+import { Recipe } from "../recipes"
+import { RecipesList } from "../../components/RecipesList"
+import { NoRecipesText } from "../../components/NoRecipesText"
+
+import { Container } from "./country"
 interface ICountry {
   id: string
   name: string
@@ -13,42 +13,44 @@ interface ICountry {
   recipes: Recipe[]
 }
 
-export default function Country() {
-  const { query } = useRouter()
-  const { id } = query
+interface CountryProps {
+  country: ICountry
+}
 
-  const [country, setCountry] = useState({} as ICountry)
+export default function Country({ country }: CountryProps) {
+  const hasRecipes = country?.recipes?.length > 0
 
-  useEffect(() => {
-    api
-      .get(`/countries/${id}`)
-      .then((response) => setCountry(response.data))
-  }, [])
-
-  const isCountryEmpty = Object.keys(country).length === 0
-
-  return !isCountryEmpty ? (
+  return (
     <Container>
       <div className="country">
         <img src={country.image} alt={country.name} />
         <h1>{country.name}</h1>
       </div>
 
-      <Recipes>
-        <h2 className="title">Recipes</h2>
-
-        <div className="recipes-cards-container">
-          {country.recipes.map((recipe) => (
-            <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
-              <RecipeCard
-                data={recipe}
-                countryOwner={country}
-                userOwner={recipe.userOwner}
-              />
-            </Link>
-          ))}
-        </div>
-      </Recipes>
+      {hasRecipes ? (
+        <RecipesList recipes={country.recipes} country={country} />
+      ) : (
+        <NoRecipesText />
+      )}
     </Container>
-  ) : null
+  )
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const { id } = ctx.params
+
+  const { data } = await api.get(`/countries/${id}`)
+
+  return {
+    props: {
+      country: data,
+    },
+  }
 }

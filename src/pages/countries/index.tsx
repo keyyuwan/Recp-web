@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import Head from "next/head"
+
 import { api } from "../../services/api"
+import { sortArrayAlphabet } from "../../utils/sortArrayAlphabet"
 import { CountryCard } from "../../components/CountryCard"
+
 import { Container, CardsContainer } from "../../styles/countries"
 
 export interface Country {
@@ -29,7 +32,7 @@ export default function Countries() {
         <h1>Countries</h1>
 
         <CardsContainer>
-          {countries.map((country) => (
+          {sortArrayAlphabet(countries).map((country) => (
             <CountryCard
               key={country.id}
               id={country.id}
