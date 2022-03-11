@@ -2,13 +2,15 @@ import { useEffect } from "react"
 import { GetStaticPaths, GetStaticProps } from "next"
 import Router from "next/router"
 import Head from "next/head"
-import Link from "next/link"
 import { useSession } from "next-auth/react"
 
 import { api } from "../../services/api"
 import { Recipe as IRecipe } from "."
+import { RecipeInfo } from "../../components/Recipe/RecipeInfo"
+import { OrderedSection } from "../../components/Recipe/OrderedSection"
+import { Footer } from "../../components/Recipe/Footer"
 
-import { Container, RecipeInfo, Footer } from "./recipe"
+import { Container } from "./recipe"
 
 interface RecipeInterface extends IRecipe {
   description: string
@@ -34,59 +36,23 @@ export default function Recipe({ recipe }: RecipeProps) {
       </Head>
 
       <Container>
-        <RecipeInfo>
-          <img src={recipe.image} alt={recipe.name} />
+        <RecipeInfo
+          name={recipe.name}
+          image={recipe.image}
+          description={recipe.description}
+        />
 
-          <h1>{recipe.name}</h1>
-          <p>{recipe.description}</p>
-        </RecipeInfo>
+        <OrderedSection arr={recipe.ingredients} />
 
-        <div className="section">
-          <h2>Ingredients:</h2>
+        <OrderedSection
+          arr={recipe.preparation_steps}
+          className="prep-step"
+        />
 
-          <ol>
-            {recipe.ingredients.map((ingredient) => (
-              <li key={ingredient}>{ingredient}</li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="section">
-          <h2>Preparation Steps:</h2>
-
-          <ol>
-            {recipe.preparation_steps.map((step) => (
-              <li key={step} className="prep-step">
-                {step}
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <Footer>
-          <Link href={`/countries/${recipe.countryOwner.id}`}>
-            <div className="wrapper">
-              <h2>Dish origin</h2>
-              <img
-                src={recipe.countryOwner.image}
-                alt={recipe.countryOwner.name}
-              />
-              <p>{recipe.countryOwner.name}</p>
-            </div>
-          </Link>
-
-          <Link href={`/user/${recipe.userOwner.id}`}>
-            <div className="wrapper">
-              <h2>Published by</h2>
-              <img
-                src={recipe.userOwner.avatar}
-                alt={recipe.userOwner.name}
-                className="author-image"
-              />
-              <p>{recipe.userOwner.name}</p>
-            </div>
-          </Link>
-        </Footer>
+        <Footer
+          country={recipe.countryOwner}
+          user={recipe.userOwner}
+        />
       </Container>
     </>
   )
