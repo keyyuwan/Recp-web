@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
+import { GetServerSideProps } from "next"
 import Head from "next/head"
+
 import { api } from "../../services/api"
 import { RecipeCard } from "../../components/RecipeCard"
 import { Country } from "../countries"
+
 import { Container, CardsContainer } from "../../styles/recipes"
 
 export interface User {
@@ -24,13 +26,11 @@ export interface Recipe {
   userOwner: User
 }
 
-export default function Recipes() {
-  const [recipes, setRecipes] = useState<Recipe[]>([])
+interface RecipesProps {
+  recipes: Recipe[]
+}
 
-  useEffect(() => {
-    api.get("/recipes").then((response) => setRecipes(response.data))
-  }, [])
-
+export default function Recipes({ recipes }: RecipesProps) {
   return (
     <>
       <Head>
@@ -53,4 +53,14 @@ export default function Recipes() {
       </Container>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await api.get("/recipes")
+
+  return {
+    props: {
+      recipes: data,
+    },
+  }
 }
