@@ -1,27 +1,21 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+import { GetServerSideProps } from "next"
+
 import { api } from "../../services/api"
 import { User as IUser } from "../recipes/index"
 import { UserInfo } from "../../components/User/UserInfo"
 import { RecipesList } from "../../components/RecipesList"
 import { NoRecipesText } from "../../components/NoRecipesText"
+
 import { Container } from "./styles"
 
-export default function User() {
-  const { query } = useRouter()
-  const { id } = query
+interface UserProps {
+  user: IUser
+}
 
-  const [user, setUser] = useState({} as IUser)
-
-  useEffect(() => {
-    api.get(`/users/${id}`).then((response) => setUser(response.data))
-  }, [])
-
-  const isUserEmpty = Object.keys(user).length === 0
-
+export default function User({ user }: UserProps) {
   const hasRecipes = user?.recipes?.length > 0
 
-  return !isUserEmpty ? (
+  return (
     <Container>
       <UserInfo
         avatar={user.avatar}
@@ -35,5 +29,17 @@ export default function User() {
         <NoRecipesText />
       )}
     </Container>
-  ) : null
+  )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { id } = ctx.params
+
+  const { data } = await api.get(`/users/${id}`)
+
+  return {
+    props: {
+      user: data,
+    },
+  }
 }

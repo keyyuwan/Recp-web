@@ -45,6 +45,9 @@ export function RecipeCard({
     userId: string
   ) {
     event.stopPropagation()
+
+    if (recipeOwnerIsUserAuth) return
+
     Router.push(`/user/${userId}`)
   }
 
@@ -65,17 +68,19 @@ export function RecipeCard({
             <p>{countryOwner.name}</p>
           </div>
 
-          {recipeOwnerIsUserAuth ? null : (
-            <div
-              className="author"
-              onClick={(event) =>
-                handleRedirectToUserPage(event, userOwner.id)
-              }
-            >
-              <img src={userOwner.avatar} alt={userOwner.name} />
-              <p>{userOwner.name}</p>
-            </div>
-          )}
+          <div
+            className="author"
+            onClick={(event) =>
+              handleRedirectToUserPage(event, userOwner.id)
+            }
+          >
+            <img
+              src={userOwner.avatar}
+              alt={userOwner.name}
+              referrerPolicy="no-referrer" // avoids 403 error to user google image
+            />
+            <p>{userOwner.name}</p>
+          </div>
         </div>
       </Container>
     </Link>
