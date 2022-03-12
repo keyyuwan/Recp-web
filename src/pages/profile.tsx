@@ -15,13 +15,14 @@ export default function Profile() {
 
   const [recipes, setRecipes] = useState<Recipe[]>([])
 
+  // salvar sub nos cookies pra eu poder ter acesso pelo server-side
   useEffect(() => {
     api
       .get("/users/auth/recipes")
       .then((response) => setRecipes(response.data))
   }, [])
 
-  const hasRecipes = recipes.length > 0
+  const hasRecipes = recipes?.length > 0
 
   return !!session ? (
     <Container>

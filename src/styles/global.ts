@@ -58,4 +58,48 @@ export const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         color: inherit;
     }
+
+    .modal-overlay {
+        background: rgba(0, 0, 0, 0.5);
+
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+  }
+
+  .modal-content {
+        width: 100%;
+        max-width: 576px;
+        background: var(--gray-50);
+        padding: 2rem;
+        /* position: relative; */
+        border-radius: 0.25rem;
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        button {
+            height: 40px;
+            width: 100%;
+            border-radius: .25rem;
+
+            background: var(--red-500);
+            color: var(--gray-50);
+
+            margin-top: 1rem;
+
+            transition: filter .2s;
+
+            &:hover {
+                filter: brightness(0.9);
+            }
+        }
+  }
 `

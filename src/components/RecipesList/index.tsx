@@ -1,4 +1,5 @@
-import Link from "next/link"
+import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
 
 import { RecipeCard } from "../RecipeCard"
 import { Recipe } from "../../pages/recipes"
@@ -18,13 +19,12 @@ export function RecipesList({ recipes, country }: RecipesListProps) {
 
       <div className="recipes-cards-container">
         {recipes.map((recipe) => (
-          <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
-            <RecipeCard
-              data={recipe}
-              countryOwner={country ?? recipe.countryOwner}
-              userOwner={recipe.userOwner}
-            />
-          </Link>
+          <RecipeCard
+            key={recipe.id}
+            data={recipe}
+            countryOwner={country ?? recipe.countryOwner}
+            userOwner={recipe.userOwner}
+          />
         ))}
       </div>
     </Recipes>
