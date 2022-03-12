@@ -64,7 +64,10 @@ export function RecipeCard({
     <>
       {/* If user is not authenticated, he can't have access to the
       recipe */}
-      <div onClick={handleRedirectToRecipePage}>
+      <div
+        onClick={handleRedirectToRecipePage}
+        style={{ marginTop: "1.5rem" }}
+      >
         {/* Modal will only open if user is not authenticated */}
         <Container onClick={handleOpenModal}>
           <img src={data.image} alt={data.name} className="food" />

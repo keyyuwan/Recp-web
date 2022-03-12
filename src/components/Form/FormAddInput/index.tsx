@@ -55,8 +55,8 @@ export function FormAddInput({
       </Header>
 
       {[...Array(inputsCount)].map((_, index) => (
-        <>
-          <InputContainer key={index}>
+        <div key={index}>
+          <InputContainer>
             <Input
               name={name}
               label={`${index + 1}.`}
@@ -77,7 +77,7 @@ export function FormAddInput({
           </InputContainer>
 
           {!!errorText && <ErrorText>{errorText}</ErrorText>}
-        </>
+        </div>
       ))}
     </>
   )

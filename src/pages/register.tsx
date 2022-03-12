@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
+import Router from "next/router"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
+
 import { api } from "../services/api"
 import { withSSRAuth } from "../utils/withSSRAuth"
 import { sortArrayAlphabet } from "../utils/sortArrayAlphabet"
 import { Input } from "../components/Form/Input"
 import { FormAddInput } from "../components/Form/FormAddInput"
 import { Country } from "./countries"
+
 import { Container, Form, CountyField } from "../styles/register"
 
 interface RegisterFormData {
@@ -37,6 +40,7 @@ const registerFormSchema = yup.object().shape({
         .required("Recipe must have at least 1 preparation step")
     )
     .min(1),
+  country: yup.string().required("You must select a country"),
 })
 
 export default function Register() {
@@ -52,15 +56,28 @@ export default function Register() {
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(registerFormSchema),
   })
 
-  const handleRegister: SubmitHandler<RegisterFormData> = (
+  const handleRegister: SubmitHandler<RegisterFormData> = async (
     values
   ) => {
-    console.log(values)
+    try {
+      await api.post("/recipes", {
+        name: values.name,
+        image: values.image,
+        description: values.description,
+        ingredients: JSON.stringify(values.ingredients),
+        preparation_steps: JSON.stringify(values.preparation_steps),
+        country_id: values.country,
+      })
+    } catch (err) {
+      console.log(err)
+    } finally {
+      Router.push("/profile")
+    }
   }
 
   const sortedCountries = sortArrayAlphabet(countries)
@@ -128,16 +145,21 @@ export default function Register() {
               id="country"
               {...register("country")}
             >
+              <option value="" selected disabled hidden>
+                Country
+              </option>
               {sortedCountries.map((country) => (
-                <option key={country.id} value={country.name}>
+                <option key={country.id} value={country.id}>
                   {country.name}
                 </option>
               ))}
             </select>
+
+            {errors.country ? <p>{errors.country.message}</p> : null}
           </CountyField>
 
           <button type="submit" className="register">
-            Register Recipe
+            {isSubmitting ? "..." : "Register Recipe"}
           </button>
         </Form>
       </div>

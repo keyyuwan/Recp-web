@@ -71,6 +71,12 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         align-items: center;
         justify-content: center;
+
+        padding: 1.5rem;
+
+        @media (min-width: 768px) {
+            padding: 0;
+        }
   }
 
   .modal-content {
