@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import Router from "next/router"
-import Link from "next/link"
 import Modal from "react-modal"
-
+import { AiOutlineDelete } from "react-icons/ai"
 import { Country } from "../../pages/countries"
-
-import { Container } from "./styles"
+import { Container, DeleteIconButton } from "./styles"
+import { redirectsWithEventStopPropagation } from "../../utils/redirectsWithEventStopPropagation"
 
 interface User {
   id: string
@@ -50,6 +49,8 @@ export function RecipeCard({
   const handleCloseModal = () => setIsModalOpen(false)
 
   function handleRedirectToRecipePage() {
+    // If user is not authenticated, he can't have access to the
+    // recipe
     if (!session) {
       return
     }
@@ -62,19 +63,24 @@ export function RecipeCard({
 
   return (
     <>
-      {/* If user is not authenticated, he can't have access to the
-      recipe */}
-      <div
-        onClick={handleRedirectToRecipePage}
-        style={{ marginTop: "1.5rem" }}
-      >
+      <div onClick={handleRedirectToRecipePage}>
         {/* Modal will only open if user is not authenticated */}
-        <Container onClick={handleOpenModal}>
+        <Container
+          onClick={handleOpenModal}
+          recipeOwnerIsUserAuth={recipeOwnerIsUserAuth}
+        >
           <img src={data.image} alt={data.name} className="food" />
           <div className="card-info">
             <h2>{data.name}</h2>
 
-            <Link href={`/countries/${countryOwner.id}`}>
+            <div
+              onClick={(event) =>
+                redirectsWithEventStopPropagation(
+                  event,
+                  `/countries/${countryOwner.id}`
+                )
+              }
+            >
               <div className="country">
                 <img
                   src={countryOwner.image}
@@ -82,11 +88,14 @@ export function RecipeCard({
                 />
                 <p>{countryOwner.name}</p>
               </div>
-            </Link>
+            </div>
 
-            <Link
-              href={
-                !recipeOwnerIsUserAuth ? `/user/${userOwner.id}` : ""
+            <div
+              onClick={(event) =>
+                redirectsWithEventStopPropagation(
+                  event,
+                  `/user/${userOwner.id}`
+                )
               }
             >
               <div className="author">
@@ -97,8 +106,14 @@ export function RecipeCard({
                 />
                 <p>{userOwner.name}</p>
               </div>
-            </Link>
+            </div>
           </div>
+
+          {recipeOwnerIsUserAuth && (
+            <DeleteIconButton>
+              <AiOutlineDelete size={20} />
+            </DeleteIconButton>
+          )}
         </Container>
       </div>
 

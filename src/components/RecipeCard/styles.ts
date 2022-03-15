@@ -1,12 +1,22 @@
 import styled from "styled-components"
 
-export const Container = styled.div`
+interface ContainerProps {
+  recipeOwnerIsUserAuth: boolean
+}
+
+export const Container = styled.div<ContainerProps>`
   width: 280px;
   border-radius: 5px;
   background: var(--red-500);
   color: var(--gray-50);
 
   transition: transform 0.5s;
+
+  ${({ recipeOwnerIsUserAuth }) =>
+    recipeOwnerIsUserAuth &&
+    `
+    position: relative;
+  `}
 
   &:hover {
     cursor: pointer;
@@ -20,7 +30,7 @@ export const Container = styled.div`
   }
 
   .card-info {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
 
     .country {
       margin-top: 1rem;
@@ -29,7 +39,7 @@ export const Container = styled.div`
       gap: 0.5rem;
 
       img {
-        height: 32px;
+        height: 24px;
         width: 32px;
       }
     }
@@ -41,8 +51,8 @@ export const Container = styled.div`
       gap: 0.5rem;
 
       img {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
       }
     }
@@ -57,5 +67,22 @@ export const Container = styled.div`
     & + & {
       margin: 0;
     }
+  }
+`
+
+export const DeleteIconButton = styled.button`
+  position: absolute;
+  top: -0.7rem;
+  right: -0.7rem;
+
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+
+  background: var(--red-400);
+  font-size: 0; // aligns the icon to the center
+
+  svg {
+    color: var(--gray-50);
   }
 `
