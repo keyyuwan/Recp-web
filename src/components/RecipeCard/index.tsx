@@ -4,8 +4,8 @@ import Router from "next/router"
 import Modal from "react-modal"
 import { AiOutlineDelete } from "react-icons/ai"
 import { Country } from "../../pages/countries"
+import { RecipeRelation } from "./RecipeRelation"
 import { Container, DeleteIconButton } from "./styles"
-import { redirectsWithEventStopPropagation } from "../../utils/redirectsWithEventStopPropagation"
 
 interface User {
   id: string
@@ -73,40 +73,19 @@ export function RecipeCard({
           <div className="card-info">
             <h2>{data.name}</h2>
 
-            <div
-              onClick={(event) =>
-                redirectsWithEventStopPropagation(
-                  event,
-                  `/countries/${countryOwner.id}`
-                )
-              }
-            >
-              <div className="country">
-                <img
-                  src={countryOwner.image}
-                  alt={countryOwner.name}
-                />
-                <p>{countryOwner.name}</p>
-              </div>
-            </div>
+            <RecipeRelation
+              href={`/countries/${countryOwner.id}`}
+              image={countryOwner.image}
+              name={countryOwner.name}
+              type="country"
+            />
 
-            <div
-              onClick={(event) =>
-                redirectsWithEventStopPropagation(
-                  event,
-                  `/user/${userOwner.id}`
-                )
-              }
-            >
-              <div className="author">
-                <img
-                  src={userOwner.avatar}
-                  alt={userOwner.name}
-                  referrerPolicy="no-referrer" // avoids 403 error to user google image
-                />
-                <p>{userOwner.name}</p>
-              </div>
-            </div>
+            <RecipeRelation
+              href={`/user/${userOwner.id}`}
+              image={userOwner.avatar}
+              name={userOwner.name}
+              type="user"
+            />
           </div>
 
           {recipeOwnerIsUserAuth && (

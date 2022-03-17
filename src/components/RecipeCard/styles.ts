@@ -44,7 +44,7 @@ export const Container = styled.div<ContainerProps>`
       }
     }
 
-    .author {
+    .user {
       margin-top: 1rem;
       display: flex;
       align-items: center;
@@ -57,7 +57,7 @@ export const Container = styled.div<ContainerProps>`
       }
     }
 
-    .author:hover,
+    .user:hover,
     .country:hover {
       text-decoration: underline;
     }
