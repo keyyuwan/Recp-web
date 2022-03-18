@@ -79,7 +79,7 @@ export const GlobalStyle = createGlobalStyle`
         }
   }
 
-  .modal-content {
+    .modal-content {
         width: 100%;
         max-width: 576px;
         background: var(--gray-50);
@@ -89,23 +89,6 @@ export const GlobalStyle = createGlobalStyle`
 
         h1 {
             font-size: 2rem;
-        }
-
-        button {
-            height: 40px;
-            width: 100%;
-            border-radius: .25rem;
-
-            background: var(--red-500);
-            color: var(--gray-50);
-
-            margin-top: 1rem;
-
-            transition: filter .2s;
-
-            &:hover {
-                filter: brightness(0.9);
-            }
         }
   }
 `

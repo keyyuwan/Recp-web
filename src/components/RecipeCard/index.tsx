@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { MouseEvent, useState } from "react"
 import { useSession } from "next-auth/react"
 import Router from "next/router"
-import Modal from "react-modal"
 import { AiOutlineDelete } from "react-icons/ai"
 import { Country } from "../../pages/countries"
 import { RecipeRelation } from "./RecipeRelation"
+import { AuthNeededModal } from "../Modal/AuthNeededModal"
+import { DeleteRecipeModal } from "../Modal/DeleteRecipeModal"
 import { Container, DeleteIconButton } from "./styles"
 
 interface User {
@@ -31,26 +32,39 @@ export function RecipeCard({
 }: RecipeCardProps) {
   const { data: session } = useSession()
 
-  useEffect(() => {
-    Modal.setAppElement("body")
-  }, [])
+  // AUTHENTICATION NEEDED MODAL - state and functions
+  const [isAuthNeededModalOpen, setIsAuthNeededModalOpen] =
+    useState(false)
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  function handleOpenModal() {
+  function handleOpenAuthNeededModal() {
     // Modal will only open if user is not authenticated
     if (session) {
       return
     }
 
-    setIsModalOpen(true)
+    setIsAuthNeededModalOpen(true)
   }
 
-  const handleCloseModal = () => setIsModalOpen(false)
+  const handleCloseAuthNeededModal = () =>
+    setIsAuthNeededModalOpen(false)
 
+  // DELETE RECIPE MODAL - state and functions
+  const [isDeleteRecipeModalOpen, setIsDeleteRecipeModalOpen] =
+    useState(false)
+
+  function handleOpenDeleteRecipeModal(
+    event: MouseEvent<HTMLButtonElement>
+  ) {
+    event.stopPropagation()
+    setIsDeleteRecipeModalOpen(true)
+  }
+
+  const handleCloseDeleteRecipeModal = () =>
+    setIsDeleteRecipeModalOpen(false)
+
+  // Redirects to recipe page
   function handleRedirectToRecipePage() {
-    // If user is not authenticated, he can't have access to the
-    // recipe
+    // If user is not authenticated, he can't have access to the recipe
     if (!session) {
       return
     }
@@ -66,10 +80,11 @@ export function RecipeCard({
       <div onClick={handleRedirectToRecipePage}>
         {/* Modal will only open if user is not authenticated */}
         <Container
-          onClick={handleOpenModal}
+          onClick={handleOpenAuthNeededModal}
           recipeOwnerIsUserAuth={recipeOwnerIsUserAuth}
         >
           <img src={data.image} alt={data.name} className="food" />
+
           <div className="card-info">
             <h2>{data.name}</h2>
 
@@ -89,23 +104,25 @@ export function RecipeCard({
           </div>
 
           {recipeOwnerIsUserAuth && (
-            <DeleteIconButton>
+            <DeleteIconButton onClick={handleOpenDeleteRecipeModal}>
               <AiOutlineDelete size={20} />
             </DeleteIconButton>
           )}
         </Container>
       </div>
 
-      {/* MODAL */}
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={handleCloseModal}
-        overlayClassName="modal-overlay"
-        className="modal-content"
-      >
-        <h1>You need to authenticate to access the Recipe</h1>
-        <button onClick={handleCloseModal}>OK</button>
-      </Modal>
+      {/* AUTHENTICATION NEEDED MODAL */}
+      <AuthNeededModal
+        isOpen={isAuthNeededModalOpen}
+        handleClose={handleCloseAuthNeededModal}
+      />
+
+      {/* DELETE RECIPE MODAL */}
+      <DeleteRecipeModal
+        isOpen={isDeleteRecipeModalOpen}
+        handleClose={handleCloseDeleteRecipeModal}
+        recipeName={data.name}
+      />
     </>
   )
 }

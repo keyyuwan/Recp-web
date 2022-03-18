@@ -42,9 +42,13 @@ export default function Recipe({ recipe }: RecipeProps) {
           description={recipe.description}
         />
 
-        <OrderedSection arr={recipe.ingredients} />
+        <OrderedSection
+          title="Ingredients"
+          arr={recipe.ingredients}
+        />
 
         <OrderedSection
+          title="Preparation Steps"
           arr={recipe.preparation_steps}
           className="prep-step"
         />
