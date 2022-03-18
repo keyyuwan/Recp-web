@@ -122,6 +122,7 @@ export function RecipeCard({
         isOpen={isDeleteRecipeModalOpen}
         handleClose={handleCloseDeleteRecipeModal}
         recipeName={data.name}
+        recipeId={data.id}
       />
     </>
   )
