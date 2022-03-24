@@ -1,28 +1,27 @@
+import { useState } from "react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 import { FaPlus } from "react-icons/fa"
 import { NoRecipesText } from "../components/NoRecipesText"
 import { RecipesList } from "../components/RecipesList"
 import { UserInfo } from "../components/User/UserInfo"
-import { api } from "../services/api"
-import { Container, RegisterRecipeButton } from "../styles/profile"
+import { useUserAuthRecipes } from "../hooks/useUserAuthRecipes"
 import { withSSRAuth } from "../utils/withSSRAuth"
-import { Recipe } from "./recipes"
+import { Container, RegisterRecipeButton } from "../styles/profile"
 
 export default function Profile() {
   const { data: session } = useSession()
 
-  const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [isRecipesLoading, setIsRecipesLoading] = useState(true)
 
-  // salvar sub nos cookies pra eu poder ter acesso pelo server-side
-  useEffect(() => {
-    api
-      .get("/users/auth/recipes")
-      .then((response) => setRecipes(response.data))
-  }, [])
+  const recipes = useUserAuthRecipes(
+    isRecipesLoading,
+    setIsRecipesLoading
+  )
 
-  const hasRecipes = recipes?.length > 0
+  function setRecipesLoadingToTrue() {
+    setIsRecipesLoading(true)
+  }
 
   return !!session ? (
     <Container>
@@ -32,10 +31,15 @@ export default function Profile() {
         email={session.user.email}
       />
 
-      {hasRecipes ? (
-        <RecipesList recipes={recipes} />
-      ) : (
+      {isRecipesLoading ? (
+        <h1>Loading...</h1>
+      ) : recipes.length === 0 ? (
         <NoRecipesText />
+      ) : (
+        <RecipesList
+          recipes={recipes}
+          setRecipesLoadingToTrue={setRecipesLoadingToTrue}
+        />
       )}
 
       <Link href="/register">

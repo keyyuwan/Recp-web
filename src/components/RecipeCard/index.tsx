@@ -1,6 +1,6 @@
 import { MouseEvent, useState } from "react"
 import { useSession } from "next-auth/react"
-import Router from "next/router"
+import Router, { useRouter } from "next/router"
 import { AiOutlineDelete } from "react-icons/ai"
 import { Country } from "../../pages/countries"
 import { RecipeRelation } from "./RecipeRelation"
@@ -23,14 +23,18 @@ interface RecipeCardProps {
   data: Recipe
   countryOwner: Country
   userOwner: User
+  setRecipesLoadingToTrue: () => void
 }
 
 export function RecipeCard({
   data,
   countryOwner,
   userOwner,
+  setRecipesLoadingToTrue,
 }: RecipeCardProps) {
   const { data: session } = useSession()
+
+  const { asPath } = useRouter()
 
   // AUTHENTICATION NEEDED MODAL - state and functions
   const [isAuthNeededModalOpen, setIsAuthNeededModalOpen] =
@@ -103,7 +107,7 @@ export function RecipeCard({
             />
           </div>
 
-          {recipeOwnerIsUserAuth && (
+          {recipeOwnerIsUserAuth && asPath === "/profile" && (
             <DeleteIconButton onClick={handleOpenDeleteRecipeModal}>
               <AiOutlineDelete size={20} />
             </DeleteIconButton>
@@ -123,6 +127,7 @@ export function RecipeCard({
         handleClose={handleCloseDeleteRecipeModal}
         recipeName={data.name}
         recipeId={data.id}
+        setRecipesLoadingToTrue={setRecipesLoadingToTrue}
       />
     </>
   )

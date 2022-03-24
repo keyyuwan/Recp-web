@@ -10,9 +10,14 @@ import { Recipes } from "./styles"
 interface RecipesListProps {
   recipes: Recipe[]
   country?: Country
+  setRecipesLoadingToTrue: () => void
 }
 
-export function RecipesList({ recipes, country }: RecipesListProps) {
+export function RecipesList({
+  recipes,
+  country,
+  setRecipesLoadingToTrue,
+}: RecipesListProps) {
   return (
     <Recipes>
       <h2 className="title">Recipes</h2>
@@ -24,6 +29,7 @@ export function RecipesList({ recipes, country }: RecipesListProps) {
             data={recipe}
             countryOwner={country ?? recipe.countryOwner}
             userOwner={recipe.userOwner}
+            setRecipesLoadingToTrue={setRecipesLoadingToTrue}
           />
         ))}
       </div>

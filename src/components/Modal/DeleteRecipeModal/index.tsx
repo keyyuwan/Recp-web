@@ -7,6 +7,7 @@ interface DeleteRecipeModalProps {
   handleClose: () => void
   recipeName: string
   recipeId: string
+  setRecipesLoadingToTrue: () => void
 }
 
 export function DeleteRecipeModal({
@@ -14,6 +15,7 @@ export function DeleteRecipeModal({
   handleClose,
   recipeName,
   recipeId,
+  setRecipesLoadingToTrue,
 }: DeleteRecipeModalProps) {
   async function handleDeleteRecipe() {
     try {
@@ -24,6 +26,7 @@ export function DeleteRecipeModal({
       })
 
       handleClose()
+      setRecipesLoadingToTrue()
     } catch (error) {
       console.log(error)
     }
