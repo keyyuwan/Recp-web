@@ -11,9 +11,6 @@ export function NavBar({ isBackgroundRed }: NavBarProps) {
 
   return (
     <NavContainer isBackgroundRed={isBackgroundRed}>
-      <ActiveLink activeClassName="active" href="/">
-        <a>Home</a>
-      </ActiveLink>
       <ActiveLink activeClassName="active" href="/recipes">
         <a>Recipes</a>
       </ActiveLink>

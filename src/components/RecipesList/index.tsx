@@ -10,7 +10,7 @@ import { Recipes } from "./styles"
 interface RecipesListProps {
   recipes: Recipe[]
   country?: Country
-  setRecipesLoadingToTrue: () => void
+  setRecipesLoadingToTrue?: () => void
 }
 
 export function RecipesList({

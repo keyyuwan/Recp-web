@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useSession } from "next-auth/react"
+import Head from "next/head"
 import Link from "next/link"
 import { FaPlus } from "react-icons/fa"
 import { NoRecipesText } from "../components/NoRecipesText"
@@ -24,29 +25,35 @@ export default function Profile() {
   }
 
   return !!session ? (
-    <Container>
-      <UserInfo
-        avatar={session.user.image}
-        name={session.user.name}
-        email={session.user.email}
-      />
+    <>
+      <Head>
+        <title>Profile | Recp</title>
+      </Head>
 
-      {isRecipesLoading ? null : recipes.length === 0 ? (
-        <NoRecipesText />
-      ) : (
-        <RecipesList
-          recipes={recipes}
-          setRecipesLoadingToTrue={setRecipesLoadingToTrue}
+      <Container>
+        <UserInfo
+          avatar={session.user.image}
+          name={session.user.name}
+          email={session.user.email}
         />
-      )}
 
-      <Link href="/register">
-        <RegisterRecipeButton>
-          <FaPlus />
-          Register Recipe
-        </RegisterRecipeButton>
-      </Link>
-    </Container>
+        {isRecipesLoading ? null : recipes.length === 0 ? (
+          <NoRecipesText />
+        ) : (
+          <RecipesList
+            recipes={recipes}
+            setRecipesLoadingToTrue={setRecipesLoadingToTrue}
+          />
+        )}
+
+        <Link href="/register">
+          <RegisterRecipeButton>
+            <FaPlus />
+            Register Recipe
+          </RegisterRecipeButton>
+        </Link>
+      </Container>
+    </>
   ) : null
 }
 

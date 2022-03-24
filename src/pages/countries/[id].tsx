@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next"
+import Head from "next/head"
 
 import { api } from "../../services/api"
 import { Recipe } from "../recipes"
@@ -21,18 +22,24 @@ export default function Country({ country }: CountryProps) {
   const hasRecipes = country?.recipes?.length > 0
 
   return (
-    <Container>
-      <div className="country">
-        <img src={country.image} alt={country.name} />
-        <h1>{country.name}</h1>
-      </div>
+    <>
+      <Head>
+        <title>{country.name} | Recp</title>
+      </Head>
 
-      {hasRecipes ? (
-        <RecipesList recipes={country.recipes} country={country} />
-      ) : (
-        <NoRecipesText />
-      )}
-    </Container>
+      <Container>
+        <div className="country">
+          <img src={country.image} alt={country.name} />
+          <h1>{country.name}</h1>
+        </div>
+
+        {hasRecipes ? (
+          <RecipesList recipes={country.recipes} country={country} />
+        ) : (
+          <NoRecipesText />
+        )}
+      </Container>
+    </>
   )
 }
 

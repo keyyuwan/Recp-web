@@ -23,7 +23,7 @@ interface RecipeCardProps {
   data: Recipe
   countryOwner: Country
   userOwner: User
-  setRecipesLoadingToTrue: () => void
+  setRecipesLoadingToTrue?: () => void
 }
 
 export function RecipeCard({

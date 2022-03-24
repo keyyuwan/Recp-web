@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import Router from "next/router"
+import Head from "next/head"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { toast } from "react-toastify"
@@ -88,87 +89,95 @@ export default function Register() {
   const sortedCountries = sortArrayAlphabet(countries)
 
   return (
-    <Container>
-      <div className="content">
-        <div className="title-image">
-          <h1>Register your recipe</h1>
-          <img src="/images/register.svg" alt="Register Recipe" />
-        </div>
+    <>
+      <Head>
+        <title>Register recipe | Recp</title>
+      </Head>
 
-        <Form onSubmit={handleSubmit(handleRegister)}>
-          <Input
-            name="name"
-            label="Name"
-            errorText={errors.name?.message}
-            {...register("name")}
-          />
-          <Input
-            name="image"
-            label="Image URL"
-            errorText={errors.image?.message}
-            placeholder="Example: https://github.com/keyyuwan.png"
-            {...register("image")}
-          />
-          <Input
-            name="description"
-            label="Description"
-            isTextarea
-            textAreaRows={3}
-            errorText={errors.description?.message}
-            {...register("description")}
-          />
+      <Container>
+        <div className="content">
+          <div className="title-image">
+            <h1>Register your recipe</h1>
+            <img src="/images/register.svg" alt="Register Recipe" />
+          </div>
 
-          <FormAddInput
-            name="ingredients"
-            label="Ingredients"
-            buttonTitle="Add Ingredient"
-            register={register}
-            control={control}
-            errorText={
-              errors.ingredients && errors.ingredients[0]?.message
-            }
-          />
+          <Form onSubmit={handleSubmit(handleRegister)}>
+            <Input
+              name="name"
+              label="Name"
+              errorText={errors.name?.message}
+              {...register("name")}
+            />
+            <Input
+              name="image"
+              label="Image URL"
+              errorText={errors.image?.message}
+              placeholder="Example: https://github.com/keyyuwan.png"
+              {...register("image")}
+            />
+            <Input
+              name="description"
+              label="Description"
+              isTextarea
+              textAreaRows={3}
+              errorText={errors.description?.message}
+              {...register("description")}
+            />
 
-          <FormAddInput
-            name="preparation_steps"
-            label="Preparation Steps"
-            buttonTitle="Add Step"
-            isTextarea
-            textAreaRows={1}
-            register={register}
-            control={control}
-            errorText={
-              errors.preparation_steps &&
-              errors.preparation_steps[0]?.message
-            }
-          />
+            <FormAddInput
+              name="ingredients"
+              label="Ingredients"
+              buttonTitle="Add Ingredient"
+              register={register}
+              control={control}
+              errorText={
+                errors.ingredients && errors.ingredients[0]?.message
+              }
+            />
 
-          <CountyField>
-            <label htmlFor="country">Country</label>
-            <select
-              name="country"
-              id="country"
-              {...register("country")}
-            >
-              <option value="" selected disabled hidden>
-                Country
-              </option>
-              {sortedCountries.map((country) => (
-                <option key={country.id} value={country.id}>
-                  {country.name}
+            <FormAddInput
+              name="preparation_steps"
+              label="Preparation Steps"
+              buttonTitle="Add Step"
+              isTextarea
+              textAreaRows={1}
+              register={register}
+              control={control}
+              errorText={
+                errors.preparation_steps &&
+                errors.preparation_steps[0]?.message
+              }
+            />
+
+            <CountyField>
+              <label htmlFor="country">Country</label>
+              <select
+                name="country"
+                id="country"
+                {...register("country")}
+              >
+                <option value="" selected disabled hidden>
+                  Country
                 </option>
-              ))}
-            </select>
+                {sortedCountries.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
 
-            {errors.country ? <p>{errors.country.message}</p> : null}
-          </CountyField>
+              {errors.country ? (
+                <p>{errors.country.message}</p>
+              ) : null}
+            </CountyField>
 
-          <button type="submit" className="register">
-            {isSubmitting ? "..." : "Register Recipe"}
-          </button>
-        </Form>
-      </div>
-    </Container>
+            <button type="submit" className="register">
+              {isSubmitting ? "..." : "Register Recipe"}
+            </button>
+          </Form>
+        </div>
+      </Container>
+    </>
   )
 }
 

@@ -9,7 +9,7 @@ interface DeleteRecipeModalProps {
   handleClose: () => void
   recipeName: string
   recipeId: string
-  setRecipesLoadingToTrue: () => void
+  setRecipesLoadingToTrue?: () => void
 }
 
 export function DeleteRecipeModal({
@@ -30,7 +30,7 @@ export function DeleteRecipeModal({
       toast.success("Recipe deleted!", toastOptions)
 
       handleClose()
-      setRecipesLoadingToTrue()
+      if (setRecipesLoadingToTrue) setRecipesLoadingToTrue()
     } catch (error) {
       console.log(error)
       toast.error(error.message, toastOptions)
