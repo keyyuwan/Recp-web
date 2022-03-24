@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import Router from "next/router"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { toast } from "react-toastify"
 
 import { api } from "../services/api"
 import { withSSRAuth } from "../utils/withSSRAuth"
@@ -10,6 +11,7 @@ import { sortArrayAlphabet } from "../utils/sortArrayAlphabet"
 import { Input } from "../components/Form/Input"
 import { FormAddInput } from "../components/Form/FormAddInput"
 import { Country } from "./countries"
+import { toastOptions } from "../utils/toastifyOptions"
 
 import { Container, Form, CountyField } from "../styles/register"
 
@@ -73,8 +75,11 @@ export default function Register() {
         preparation_steps: JSON.stringify(values.preparation_steps),
         country_id: values.country,
       })
+
+      toast.success("Recipe created!", toastOptions)
     } catch (err) {
       console.log(err)
+      toast.error(err.message, toastOptions)
     } finally {
       Router.push("/profile")
     }

@@ -1,6 +1,8 @@
+import { toast } from "react-toastify"
 import { api } from "../../../services/api"
 import { Modal } from "../index"
 import { ColoredText, ButtonsContainer } from "./styles"
+import { toastOptions } from "../../../utils/toastifyOptions"
 
 interface DeleteRecipeModalProps {
   isOpen: boolean
@@ -25,10 +27,13 @@ export function DeleteRecipeModal({
         },
       })
 
+      toast.success("Recipe deleted!", toastOptions)
+
       handleClose()
       setRecipesLoadingToTrue()
     } catch (error) {
       console.log(error)
+      toast.error(error.message, toastOptions)
     }
   }
 
