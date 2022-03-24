@@ -31,9 +31,7 @@ export default function Profile() {
         email={session.user.email}
       />
 
-      {isRecipesLoading ? (
-        <h1>Loading...</h1>
-      ) : recipes.length === 0 ? (
+      {isRecipesLoading ? null : recipes.length === 0 ? (
         <NoRecipesText />
       ) : (
         <RecipesList
